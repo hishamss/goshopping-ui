@@ -1,0 +1,56 @@
+* 
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+.root 
+  overflow: hidden
+
+li 
+  list-style: none
+
+a 
+  text-decoration: none
+
+ul, form
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 1rem
+
+form
+  flex-direction: column
+
+button 
+  background-color: #444
+  color: white
+  padding: .4rem .95rem
+  border: none
+  margin: 0 .25rem
+  cursor: pointer
+  border-radius: 8px
+
+button:hover, button:focus 
+  background-color: #ff2900
+
+button:active
+  background-color: red
+
+input
+  height: 1.75rem
+  margin: 0 .5rem
+  width: 12rem
+  padding: 4px
+  border-radius: 6px
+
+.error, .success
+  font-weight: bold
+
+.error
+  color: red
+
+.success
+  color: green
+
+.prompt
+  margin: .5rem 0 1.2rem 0
