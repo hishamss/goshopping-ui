@@ -1,18 +1,16 @@
 const Footer = () => {
-    return (<>
-        <footer>
-            <span>
-                <ul>
-                    <li>Md Abul Kashem,</li>
-                    <li>Nick Barak,</li>
-                    <li>Zack Garner,</li>
-                    <li>Hisham Saymeh,</li>
-                    <li>Vincent Sevilla,</li>
-                    <li>Eric Terrari</li>
-                </ul>
-                <div>&copy; 2020 Revature</div>
-            </span>
-        </footer>
+    return <footer>
+        <span>
+            <ul>
+                <li>Md Abul Kashem,</li>
+                <li>Nick Barak,</li>
+                <li>Zack Garner,</li>
+                <li>Hisham Saymeh,</li>
+                <li>Vincent Sevilla,</li>
+                <li>Eric Terreri</li>
+            </ul>
+            <div>&copy; 2020 Revature</div>
+        </span>
 
         <style>{`
             footer, footer span {
@@ -41,7 +39,7 @@ const Footer = () => {
                 gap: .65rem;
             }
         `}</style>
-    </>)
+    </footer>
 }
 
 export default Footer;

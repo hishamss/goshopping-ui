@@ -5,7 +5,8 @@ interface Props extends RouteComponentProps {
     to : string;
 }
 
-const Redirect = ({ history, to='/' }: Props) => {
+// Redirect to any route by passing it to the "to" property. Redirects to home by default.
+const Redirect = ({ history, to='/' } : Props) => {
     useEffect(() => history.push(to));
 
     return <></>

@@ -7,7 +7,7 @@ import Footer from './Footer';
 const Layout = (Body : ComponentType<any>) => (props : any) =>
     <>
         <Header />
-        <div style={{ margin: '1rem' }}> <Body {...props} /> </div>
+        <div className="body"> <Body {...props} /> </div>
         <Footer />
     </>
 

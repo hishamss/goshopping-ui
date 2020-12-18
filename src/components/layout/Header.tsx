@@ -7,11 +7,9 @@ interface Props {
 }
 
 const Header = (props: Props) => {
-    return (<>
-        <header>
-            <Nav />
-            <NavLogin />
-        </header>
+    return <header>
+        <Nav />
+        <NavLogin />
 
         <style>{`
             header {
@@ -23,7 +21,7 @@ const Header = (props: Props) => {
                 justify-content: space-around;
             }
         `}</style>
-    </>)
+    </header>
 }
 
 export default Header;
