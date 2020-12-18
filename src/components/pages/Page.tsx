@@ -8,7 +8,7 @@ interface Props {
     type : typeof PAGE_ONE | typeof PAGE_TWO | typeof AUTHENTICATED;
 }
 
-// Return a div with a class name of the component
+// Return a div with a class name of the component, include style tags below all JSX but inside component div
 
 // If component has three versions, render with a switch case (This pattern is likely too verbose and we may be better off with unique components; Just trying it out if applicable -Nick)
 const Page = ({ type } : Props) => {
@@ -30,6 +30,8 @@ const Page = ({ type } : Props) => {
         <div className="prompt">You're {!user && 'not '}{type === AUTHENTICATED && 'definitely '}authenticated</div>
     
         {/* Prefix all selectors with the class name of the component to limit scope (i.e. ".Page .heading") */}
+        {/* import { colors } from styles.ts and inject with ${colors.SOMECOLOR}, don't hardcode! */}
+        {/* Don't use inline styles; Prefer classes instead of hierarchical selectors */}
         <style>{`
 
         `}</style>

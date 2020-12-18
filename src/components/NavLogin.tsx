@@ -5,6 +5,7 @@ import { routes, /* apiRoutes */ } from '../resources';
 import { Store } from '../types';
 // import axios from 'axios';
 import { updateUser } from '../store/actions';
+import { colors } from '../styles';
 
 const NavLogin = () => {
     const dispatch = useDispatch();
@@ -51,26 +52,26 @@ const NavLogin = () => {
             }
 
             .NavLogin a, .NavLogin button {
-                background-color: tomato;
+                background-color: ${colors.LIGHTER};
                 border: none;
                 border-radius: 15px;
                 padding: .5rem .95rem;
                 cursor: pointer;
-                color: white;
+                color: ${colors.GRAYSCALE[2]};
                 font-size: .95rem;
                 outline: none;
             }
 
             .NavLogin .selected {
-                background-color: #ff2900;
+                background-color: ${colors.DARKER};
             }
             
             .NavLogin a:hover, .NavLogin a:focus, .NavLogin button:hover, .NavLogin button:focus {
-                background-color: #ff9000;
+                background-color: ${colors.LIGHTEST};
             }
 
             .NavLogin a:active, .NavLogin button:active {
-                background-color: red;
+                background-color: ${colors.DARKEST};
             }
 
             .NavLogin .errorMsg {

@@ -1,3 +1,5 @@
+import { colors } from '../../styles';
+
 const Footer = () => {
     return <footer>
         <span>
@@ -25,8 +27,8 @@ const Footer = () => {
                 left: 0;
                 right: 0;
                 height: 8rem;
-                background-color: #333;
-                color: white;
+                background-color: ${colors.GRAYSCALE[1]};
+                color: ${colors.GRAYSCALE[2]};
                 text-align: center;
             }
 

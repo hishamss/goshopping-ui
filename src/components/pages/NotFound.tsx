@@ -2,6 +2,7 @@ import React from 'react';
 import { routes } from '../../resources';
 import { Link } from 'react-router-dom';
 import Layout from '../layout';
+import { colors } from '../../styles';
 
 const NotFound = () => {
     return <div className="NotFound">
@@ -15,26 +16,26 @@ const NotFound = () => {
             }
 
             .NotFound a {
-                background-color: tomato;
+                background-color: ${colors.LIGHTER};
                 border: none;
                 border-radius: 15px;
                 padding: .5rem .95rem;
                 cursor: pointer;
-                color: white;
+                color: ${colors.GRAYSCALE[2]};
                 font-size: .95rem;
                 outline: none;
             }
 
             .NotFound .selected {
-                background-color: #ff2900;
+                background-color: ${colors.DARKER};
             }
             
             .NotFound a:hover, .NotFound a:focus {
-                background-color: #ff9000;
+                background-color: ${colors.LIGHTEST};
             }
 
             .NotFound a:active {
-                background-color: red;
+                background-color: ${colors.DARKEST};
             }
         `}</style>
     </div>

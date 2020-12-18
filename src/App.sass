@@ -1,3 +1,11 @@
+$COLORS-DARKEST: red
+$COLORS-DARKER: #ff2900
+$COLORS-LIGHTER: tomato
+$COLORS-LIGHTEST: #ff9000
+$COLORS-GRAYSCALE-0: #111
+$COLORS-GRAYSCALE-1: #333
+$COLORS-GRAYSCALE-2: white
+  
 * 
   margin: 0
   padding: 0
@@ -25,8 +33,8 @@ form
   flex-direction: column
 
 button 
-  background-color: #444
-  color: white
+  background-color: $COLORS-GRAYSCALE-1
+  color: $COLORS-GRAYSCALE-2
   padding: .4rem .95rem
   border: none
   margin: 0 .25rem
@@ -35,10 +43,10 @@ button
   outline: none
 
 button:hover, button:focus 
-  background-color: #ff2900
+  background-color: $COLORS-DARKER
 
 button:active
-  background-color: red
+  background-color: $COLORS-DARKEST
 
 input
   height: 1.75rem
