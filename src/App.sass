@@ -15,9 +15,10 @@ $COLORS-GRAYSCALE-2: white
   height: 0
 
 .body
-  margin: 1rem
+  margin: 1rem 1.1rem 1.1rem 1.1rem
   position: relative
   z-index: -3
+  min-height: calc(100vh - 4.8rem - 8rem - 2.1rem)
 
 li 
   list-style: none
@@ -69,20 +70,20 @@ input
 .prompt
   margin: .5rem 0 1.2rem 0
 
-nav a
-  font-size: 1.25rem
-
-.logo
-  font-size: 1.1rem
-
 .MobileNav
   display: none
 
-@media(max-width:1300px)
+header .logo
+  font-size: 1.1rem
+
+footer
+  height: 8rem
+
+@media(max-width: 1300px)
   nav
     transform: translateX(5.5rem)
 
-@media(max-width:850px)
+@media(max-width: 850px)
   header
     .logo, nav a
       font-size: 1rem
@@ -91,19 +92,19 @@ nav a
     .NavLogin
       transform: translateY(-.15rem)
 
-@media(max-width:750px)
+@media(max-width: 750px)
   header
     .logo, nav a
       font-size: .9rem
     .NavLogin a, .NavLogin button
       font-size: .7rem
 
-@media(max-width:700px)
+@media(max-width: 700px)
   nav
     display: none
 
   header .logo
-    transform: translate(3.75rem, -.1575rem)
+    transform: translate(3.65rem, -.1575rem)
     font-size: 1.175rem
   
   .MobileNav
@@ -120,13 +121,43 @@ nav a
   footer
     font-size: .85rem
 
-@media(max-width:600px)
-  header
-
-
+@media(max-width: 600px)
+  .body
+    min-height: calc(100vh - 4.8rem - 7.5rem - 2.1rem)
   footer
     font-size: .7rem
+    height: 7.5rem
 
-@media(max-width:500px)
+@media(max-width: 500px)
+  header 
+    .MobileNav
+      .hamburger, .hamburger-click-region
+        transform: translateX(-.15rem)
+      ul
+        padding-right: 7.25rem
+    .logo
+      transform: translate(3.25rem, -.1575rem)
+
   footer
     font-size: .6rem
+
+@media(max-width: 400px)
+  header
+    .NavLogin,
+      transform: translate(.4rem, -.05rem)
+      ul
+        gap: 1rem
+    .logo
+      transform: translate(3rem, 0rem)
+    .MobileNav
+      .hamburger, .hamburger-click-region
+        transform: translateX(-.25rem)
+      ul
+        padding-right: 6.25rem
+
+  footer
+    font-size: .575rem
+    div
+      margin-top: .275rem
+    ul
+      transform: translateX(-.25rem)

@@ -12,16 +12,11 @@ const MobileNav = () => {
     const user = useSelector(({ user } : Store) => user);
 
     useEffect(() => {
-        if (hamburger?.current) {
-            open
-                ? hamburger.current.classList.add('nav-open')
-                : hamburger.current.classList.remove('nav-open');
-        }
-
-        if (dropdown?.current) {
-            open
-                ? dropdown.current.classList.add('nav-open')
-                : dropdown.current.classList.remove('nav-open');
+        if (hamburger?.current && dropdown?.current) {
+            [hamburger.current, dropdown.current].forEach(ref => open
+                ? ref.classList.add('nav-open')
+                : ref.classList.remove('nav-open')
+            );
         }
     }, [open]);
 
@@ -37,10 +32,9 @@ const MobileNav = () => {
                     <li> <NavLink to={routes.ORDERS} exact activeClassName="selected">{!user.isAdmin && 'My '}Orders</NavLink> </li>
                 }
                 
-                {user?.isAdmin && <>
-                    {/* <li> <NavLink to={routes.ADMIN} exact activeClassName="selected">Admin</NavLink> </li> */}
+                {user?.isAdmin &&
                     <li> <NavLink to={routes.USERS} exact activeClassName="selected">Users</NavLink> </li>
-                </>}
+                }
                 <li> <NavLink to={routes.ABOUT} exact activeClassName="selected">About</NavLink> </li>
                 <li> <NavLink to={routes.CONTACT} exact activeClassName="selected">Contact</NavLink> </li>
             </ul>
@@ -56,13 +50,13 @@ const MobileNav = () => {
                 .MobileNav .hamburger, .MobileNav .hamburger-click-region {
                     position: absolute;
                     left: 1.5rem;
-                    top: 2.25rem;
+                    top: 2.26rem;
                 }
 
                 .MobileNav .hamburger,
                 .MobileNav .hamburger::before,
                 .MobileNav .hamburger::after {
-                    width: 1.85rem;
+                    width: 1.725rem;
                     height: 2.25px;
                     background-color: ${colors.GRAYSCALE[2]};
                     transition: transform 250ms ease-in-out,
@@ -109,7 +103,7 @@ const MobileNav = () => {
                     bottom: 0;
                     left: 0;
                     z-index: -1;
-                    padding: 20rem 8rem 1rem 1rem;
+                    padding: 20rem 7.9rem 1.1rem 1rem;
                     transition: bottom 300ms ease-out;
                     border-radius: 12px;
                 }

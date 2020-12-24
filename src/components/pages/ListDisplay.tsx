@@ -42,8 +42,8 @@ const ListDisplay = ({ type, history } : Props) => {
                     setPrompt('View and manage registered users');
                     setListItems(await getUsers());
                     break;
-                default:     
-                setHeading('Page Unknown');
+                default:
+                    setHeading('Page Unknown');
             }
         })();
     }, [type, user, history]);

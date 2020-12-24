@@ -77,6 +77,21 @@ const NavLogin = () => {
             .NavLogin .profile a:active {
                 color: ${colors.DARKER};
             }
+
+            .NavLogin .profile a {
+                background-color: transparent;
+                color: ${colors.LIGHTEST};
+                font-weight: 500;
+                font-size: 1rem;
+            }
+
+            .NavLogin .profile a:hover, .NavLogin .profile a:focus {
+                color: ${colors.LIGHTER};
+            }
+
+            .NavLogin .profile a:active {
+                color: ${colors.DARKER};
+            }
         `}</style>
     </div>
 }

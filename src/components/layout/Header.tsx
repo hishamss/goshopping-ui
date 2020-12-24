@@ -30,9 +30,18 @@ const Header = (props: Props) => {
                 color: ${colors.LIGHTEST};
                 position: absolute;
                 top: 1.66rem;
-                left: 1rem;
+                left: .9rem;
                 user-select: none;
                 background-color: ${colors.GRAYSCALE[0]};
+            }
+
+            header .logo {
+                color: ${colors.LIGHTEST};
+                position: absolute;
+                top: 1.45rem;
+                left: 1rem;
+                font-size: 1.1rem;
+                user-select: none;
             }
         `}</style>
     </header>

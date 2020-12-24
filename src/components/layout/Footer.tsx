@@ -4,11 +4,11 @@ const Footer = () => {
     return <footer>
         <span>
             <ul>
-                <li>Md Abul Kashem,</li>
-                <li>Nick Barak,</li>
-                <li>Zack Garner,</li>
-                <li>Hisham Saymeh,</li>
-                <li>Vincent Sevilla,</li>
+                <li>Md Abul Kashem</li>
+                <li>Nick Barak</li>
+                <li>Zack Garner</li>
+                <li>Hisham Saymeh</li>
+                <li>Vincent Sevilla</li>
                 <li>Eric Terreri</li>
             </ul>
             <div>&copy; 2020 Revature</div>
@@ -22,11 +22,6 @@ const Footer = () => {
             footer {
                 justify-content: center;
                 align-items: center;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 8rem;
                 background-color: ${colors.GRAYSCALE[1]};
                 color: ${colors.GRAYSCALE[2]};
                 text-align: center;
@@ -39,6 +34,11 @@ const Footer = () => {
             
             footer ul {
                 gap: .65rem;
+                margin-bottom: .25rem;
+            }
+
+            footer div {
+                user-select: none;
             }
 
             footer div {
