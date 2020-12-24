@@ -11,17 +11,18 @@ const Nav = () => {
     return <nav>
         <ul>
             <li> <NavLink to={routes.HOME} exact activeClassName="selected">Home</NavLink> </li>
-            {/* Move these into user guard if we want to require authentication */}
-            <li> <NavLink to={routes.PAGE_ONE} exact activeClassName="selected">Page 1</NavLink> </li>
-            <li> <NavLink to={routes.PAGE_TWO} exact activeClassName="selected">Page 2</NavLink> </li>
+            <li> <NavLink to={routes.STORE} exact activeClassName="selected">Store</NavLink> </li>
 
             {user &&
-                <>
-                    <li> <NavLink to={routes.AUTHENTICATED} exact activeClassName="selected">Authenticated</NavLink> </li>
-                </>
+                <li> <NavLink to={routes.ORDERS} exact activeClassName="selected">{!user.isAdmin && 'My '}Orders</NavLink> </li>
             }
-
-            {user?.isAdmin && <li> <NavLink to={routes.ADMIN} exact activeClassName="selected">Admin</NavLink> </li>}
+            
+            {user?.isAdmin && <>
+                {/* <li> <NavLink to={routes.ADMIN} exact activeClassName="selected">Admin</NavLink> </li> */}
+                <li> <NavLink to={routes.USERS} exact activeClassName="selected">Users</NavLink> </li>
+            </>}
+            <li> <NavLink to={routes.ABOUT} exact activeClassName="selected">About</NavLink> </li>
+            <li> <NavLink to={routes.CONTACT} exact activeClassName="selected">Contact</NavLink> </li>
         </ul>
 
         <style>{`

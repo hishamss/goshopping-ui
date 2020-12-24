@@ -33,7 +33,10 @@ const NavLogin = () => {
         <div className="errorMsg">{error}</div>
         <ul>
             {user
-                ? <li key="logout"> <button onClick={logOut}>Log out</button> </li>
+                ? <>
+                    <li className="profile" key="profile"> <NavLink to={routes.PROFILE}>My Profile</NavLink> </li>
+                    <li key="logout"> <button onClick={logOut}>Log out</button> </li>
+                </>
                 :
                     <>
                         <li key="signup">
@@ -76,6 +79,21 @@ const NavLogin = () => {
 
             .NavLogin .errorMsg {
                 transform: translateY(-.3rem);
+            }
+
+            .NavLogin .profile a {
+                background-color: transparent;
+                color: ${colors.LIGHTEST};
+                font-weight: 500;
+                font-size: 1rem;
+            }
+
+            .NavLogin .profile a:hover, .NavLogin .profile a:focus {
+                color: ${colors.LIGHTER};
+            }
+
+            .NavLogin .profile a:active {
+                color: ${colors.DARKER};
             }
         `}</style>
     </div>

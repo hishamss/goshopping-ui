@@ -3,14 +3,19 @@ import './App.sass';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Store } from './types';
-import { SIGN_UP, LOG_IN, PAGE_ONE, PAGE_TWO, AUTHENTICATED } from './store/types';
+import { SIGN_UP, LOG_IN, STORE, ORDERS, USERS } from './store/types';
 
 import Home from './components/pages/Home';
+import About from './components/pages/About';
+import Contact from './components/pages/Contact';
+import Profile from './components/pages/Profile';
 import Redirect from './components/pages/Redirect';
 import NotFound from './components/pages/NotFound';
-import Admin from './components/pages/Admin';
 import Login from './components/pages/Login';
-import Page from './components/pages/Page';
+import ListDisplay from './components/pages/ListDisplay';
+import Order from './components/pages/Order';
+import StoreItem from './components/pages/StoreItem';
+import User from './components/pages/User';
 import { routes } from './resources';
 
 function App() {
@@ -21,13 +26,17 @@ function App() {
       <Switch>
         {/* Perpetual routes */}
         <Route path={routes.HOME} exact component={Home} />
-        <Route key={routes.PAGE_ONE} path={routes.PAGE_ONE} exact render={() => <Page type={PAGE_ONE} />} />
-        <Route key={routes.PAGE_TWO} path={routes.PAGE_TWO} exact render={() => <Page type={PAGE_TWO} />} />
+        <Route key={routes.STORE} path={routes.STORE} exact render={() => <ListDisplay type={STORE} />} />
+        <Route key={routes.ABOUT} path={routes.ABOUT} exact component={About} />
+        <Route key={routes.CONTACT} path={routes.CONTACT} exact component={Contact} />
+        <Route key={routes.STORE_ITEM} path={routes.STORE_ITEM} exact component={StoreItem} />
 
         {user
           ? // If authenticated
             [
-              <Route key={routes.AUTHENTICATED} path={routes.AUTHENTICATED} exact render={() => <Page type={AUTHENTICATED} />} />
+              <Route key={routes.ORDERS} path={routes.ORDERS} exact render={() => <ListDisplay type={ORDERS} />} />,
+              <Route key={routes.ORDERS} path={routes.PROFILE} exact component={Profile} />,
+              <Route key={routes.ORDER} path={routes.ORDER} exact component={Order} />
             ]
           : // Else
             [
@@ -36,7 +45,10 @@ function App() {
             ]
         }
 
-        {user?.isAdmin && <Route path={routes.ADMIN} exact component={Admin} />}
+        {user?.isAdmin && [
+          <Route key={routes.USERS} path={routes.USERS} exact render={() => <ListDisplay type={USERS} />} />,
+          <Route key={routes.USER} path={routes.USER} exact component={User} />
+        ]}
 
         {/* Redirect any valid route inputs to Home, invalid to 404 */}
         {Object.values(routes).map(route => <Route key={route} path={route} exact component={Redirect} />)}

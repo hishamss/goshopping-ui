@@ -9,6 +9,7 @@ interface Props {
 
 const Header = (props: Props) => {
     return <header>
+        <strong className="logo">GoShopping!</strong>
         <Nav />
         <NavLogin />
 
@@ -20,6 +21,15 @@ const Header = (props: Props) => {
                 display: flex;
                 align-items: center;
                 justify-content: space-around;
+            }
+
+            header .logo {
+                color: ${colors.LIGHTEST};
+                position: absolute;
+                top: 1.45rem;
+                left: 1rem;
+                font-size: 1.1rem;
+                user-select: none;
             }
         `}</style>
     </header>

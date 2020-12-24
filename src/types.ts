@@ -8,6 +8,29 @@ export interface Store {
 }
 
 export interface User {
+    id : number;
     username : string;
     isAdmin : boolean;
+}
+
+export interface StoreItem {
+    id : number;
+    title : string;
+}
+
+export interface Order {
+    id : number;
+}
+
+export interface Tag {
+    id : number;
+    name : string;
+}
+
+export type ListItemTypes = StoreItem | Order | User;
+
+export interface LoginForm {
+    username : string;
+    password : string;
+    confirmPassword? : string;
 }

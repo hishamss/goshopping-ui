@@ -10,7 +10,7 @@ const Home = () => {
         <h1 className="heading">Home</h1>
         <div className="prompt">
             {user
-                ? `Welcome, ${user.username}`
+                ? `Welcome, ${user.username}!`
                 : 'Log in or sign up today!'}
         </div>
 
