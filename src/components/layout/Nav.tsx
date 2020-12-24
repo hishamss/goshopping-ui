@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { routes } from '../resources';
-import { Store } from '../types';
-import { colors } from '../styles';
+import { routes } from '../../resources';
+import { Store } from '../../types';
+import { colors } from '../../styles';
 
 const Nav = () => {
     const user = useSelector(({ user } : Store) => user);
@@ -28,8 +28,8 @@ const Nav = () => {
         <style>{`
             nav a {
                 color: ${colors.GRAYSCALE[2]};
-                font-size: 1.25rem;
                 outline: none;
+                user-select: none;
             }
 
             nav .selected {

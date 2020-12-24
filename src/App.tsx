@@ -35,7 +35,7 @@ function App() {
           ? // If authenticated
             [
               <Route key={routes.ORDERS} path={routes.ORDERS} exact render={() => <ListDisplay type={ORDERS} />} />,
-              <Route key={routes.ORDERS} path={routes.PROFILE} exact component={Profile} />,
+              <Route key={routes.PROFILE} path={routes.PROFILE} exact component={Profile} />,
               <Route key={routes.ORDER} path={routes.ORDER} exact component={Order} />
             ]
           : // Else

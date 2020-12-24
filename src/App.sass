@@ -11,11 +11,13 @@ $COLORS-GRAYSCALE-2: white
   padding: 0
   box-sizing: border-box
 
-#root 
-  overflow: hidden
+#root
+  height: 0
 
 .body
   margin: 1rem
+  position: relative
+  z-index: -3
 
 li 
   list-style: none
@@ -66,3 +68,65 @@ input
 
 .prompt
   margin: .5rem 0 1.2rem 0
+
+nav a
+  font-size: 1.25rem
+
+.logo
+  font-size: 1.1rem
+
+.MobileNav
+  display: none
+
+@media(max-width:1300px)
+  nav
+    transform: translateX(5.5rem)
+
+@media(max-width:850px)
+  header
+    .logo, nav a
+      font-size: 1rem
+    .NavLogin a, .NavLogin button
+      font-size: .75rem
+    .NavLogin
+      transform: translateY(-.15rem)
+
+@media(max-width:750px)
+  header
+    .logo, nav a
+      font-size: .9rem
+    .NavLogin a, .NavLogin button
+      font-size: .7rem
+
+@media(max-width:700px)
+  nav
+    display: none
+
+  header .logo
+    transform: translate(3.75rem, -.1575rem)
+    font-size: 1.175rem
+  
+  .MobileNav
+    display: block
+
+  .NavLogin
+    position: absolute
+    top: 1.715rem
+    right: 1.715rem
+
+  header
+    position: sticky
+    
+  footer
+    font-size: .85rem
+
+@media(max-width:600px)
+  header
+
+
+  footer
+    font-size: .7rem
+
+@media(max-width:500px)
+  footer
+    font-size: .6rem

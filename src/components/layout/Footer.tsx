@@ -40,6 +40,10 @@ const Footer = () => {
             footer ul {
                 gap: .65rem;
             }
+
+            footer div {
+                user-select: none;
+            }
         `}</style>
     </footer>
 }

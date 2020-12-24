@@ -1,36 +1,21 @@
-import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { /* useHistory, */ NavLink } from 'react-router-dom';
-import { routes, /* apiRoutes */ } from '../resources';
-import { Store } from '../types';
-// import axios from 'axios';
-import { updateUser } from '../store/actions';
-import { colors } from '../styles';
+import { useHistory, NavLink } from 'react-router-dom';
+import { routes } from '../../resources';
+import { Store } from '../../types';
+import { updateUser } from '../../store/actions';
+import { colors } from '../../styles';
 
 const NavLogin = () => {
     const dispatch = useDispatch();
-    // const history = useHistory();
+    const history = useHistory();
     const user = useSelector(({ user } : Store) => user);
-    const [error, setError] = useState('');
 
-    const logOut = async () => {
-        try {
-            // For testing purposes
-            dispatch( updateUser(null) );
-
-            // Bring these back when API is ready
-            /*
-            const response = await axios.get(apiRoutes.LOG_OUT);
-            if (response.status === 200) {
-                dispatch( updateUser(null) );
-                return history.push(routes.HOME);
-            }
-            */
-        } catch (e) { setError('Something went wrong') }
+    const logOut = () => {
+        dispatch( updateUser(null) );
+        history.push(routes.HOME);
     }
 
     return <div className="NavLogin">
-        <div className="errorMsg">{error}</div>
         <ul>
             {user
                 ? <>
@@ -63,6 +48,7 @@ const NavLogin = () => {
                 color: ${colors.GRAYSCALE[2]};
                 font-size: .95rem;
                 outline: none;
+                user-select: none;
             }
 
             .NavLogin .selected {
@@ -75,10 +61,6 @@ const NavLogin = () => {
 
             .NavLogin a:active, .NavLogin button:active {
                 background-color: ${colors.DARKEST};
-            }
-
-            .NavLogin .errorMsg {
-                transform: translateY(-.3rem);
             }
 
             .NavLogin .profile a {

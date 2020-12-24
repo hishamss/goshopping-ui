@@ -43,7 +43,7 @@ export async function getStoreItems() : Promise<[StoreItem]|[]> {
 export async function getStoreItem() : Promise<StoreItem|null> {
     try {
         const { data } = await axios.get(api.ITEM);
-        return (data ? data : null);
+        return (data ? data as StoreItem : null);
     } catch (e) {
         console.log(e);
         return null;
@@ -76,7 +76,7 @@ export async function getAllOrders() : Promise<[Order]|[]> {
 export async function getOrderById(id : number) : Promise<Order|null> {
     try {
         const { data } = await axios.get(api.ORDER + `/${id}`);
-        return (data ? data : null);
+        return (data ? data as Order : null);
     } catch (e) {
         console.log(e);
         return null;
@@ -86,7 +86,7 @@ export async function getOrderById(id : number) : Promise<Order|null> {
 export async function getOrderByUserId(id : number) : Promise<Order|null> {
     try {
         const { data } = await axios.get(api.ORDER + `/UID=${id}`);
-        return (data ? data : null);
+        return (data ? data as Order : null);
     } catch (e) {
         console.log(e);
         return null;
@@ -109,7 +109,7 @@ export async function getUsers() : Promise<[User]|[]> {
 export async function getUser(id : number) : Promise<User|null> {
     try {
         const { data } = await axios.get(api.USER + `/${id}`);
-        return (data ? data : null);
+        return (data ? data as User : null);
     } catch (e) {
         console.log(e);
         return null;
