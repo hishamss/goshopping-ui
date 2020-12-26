@@ -16,10 +16,14 @@ export interface User {
 export interface StoreItem {
     id : number;
     title : string;
+    description: string;
 }
 
 export interface Order {
     id : number;
+    itemId: number;
+    quantity: number;
+    userId: number;
 }
 
 export interface Tag {
@@ -33,4 +37,14 @@ export interface LoginForm {
     username : string;
     password : string;
     confirmPassword? : string;
+}
+
+export interface EditUsernameForm {
+    newUsername : string;
+    password : string;
+}
+
+export interface EditPasswordForm {
+    password : string;
+    newPassword : string;
 }

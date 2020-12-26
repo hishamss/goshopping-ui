@@ -21,7 +21,7 @@ const NotFound = () => {
                 border-radius: 15px;
                 padding: .5rem .95rem;
                 cursor: pointer;
-                color: ${colors.GRAYSCALE[2]};
+                color: ${colors.GRAYSCALE[5]};
                 font-size: .95rem;
                 outline: none;
             }

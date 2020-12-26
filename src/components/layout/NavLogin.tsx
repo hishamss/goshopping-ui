@@ -36,7 +36,8 @@ const NavLogin = () => {
 
         <style>{`
             .NavLogin ul {
-                gap: 1.5rem;
+                gap: 1.25rem;
+                height: 0;
             }
 
             .NavLogin a, .NavLogin button {
@@ -45,10 +46,14 @@ const NavLogin = () => {
                 border-radius: 15px;
                 padding: .5rem .95rem;
                 cursor: pointer;
-                color: ${colors.GRAYSCALE[2]};
+                color: ${colors.GRAYSCALE[5]};
                 font-size: .95rem;
                 outline: none;
                 user-select: none;
+            }
+
+            .NavLogin button {
+                padding: .57rem .95rem;
             }
 
             .NavLogin .selected {

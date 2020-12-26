@@ -1,0 +1,22 @@
+{
+    "item": [
+      { "id": 1, "title": "Item 1", "description": "Lorem ipsum qwerty asdf wasd." },
+      { "id": 2, "title": "Item 2", "description": "Dsaw fdsa ytrewq muspi merol." },
+      { "id": 3, "title": "Item 3", "description": "Lorem ipsum qwerty asdf wasd. Dsaw fdsa ytrewq muspi merol. Dsaw fdsa ytrewq muspi merol. Lorem ipsum qwerty asdf wasd." }
+    ],
+    "order": [
+      { "id": 1, "userId": 2, "itemId": 2, "quantity": 3 },
+      { "id": 2, "userId": 1, "itemId": 1, "quantity": 1 },
+      { "id": 2, "userId": 2, "itemId": 2, "quantity": 2 }
+    ],
+    "user": [
+        { "id": 1, "username": "admin", "password": "pass", "isAdmin": true },
+        { "id": 2, "username": "user", "password": "pass", "isAdmin": false }
+    ],
+    "tag": [
+        { "id": 1, "name": "electronics" },
+        { "id": 2, "name": "art" },
+        { "id": 3, "name": "home goods" },
+        { "id": 4, "name": "sports" }
+    ]
+}

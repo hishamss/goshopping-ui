@@ -40,17 +40,10 @@ const MobileNav = () => {
             </ul>
 
             <style>{`
-                .MobileNav {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    height: 0;
-                }
-
                 .MobileNav .hamburger, .MobileNav .hamburger-click-region {
                     position: absolute;
                     left: 1.5rem;
-                    top: 2.26rem;
+                    top: 2.45rem;
                 }
 
                 .MobileNav .hamburger,
@@ -58,7 +51,7 @@ const MobileNav = () => {
                 .MobileNav .hamburger::after {
                     width: 1.725rem;
                     height: 2.25px;
-                    background-color: ${colors.GRAYSCALE[2]};
+                    background-color: ${colors.GRAYSCALE[5]};
                     transition: transform 250ms ease-in-out,
                                 opacity 250ms ease-in-out;
                 }
@@ -109,7 +102,7 @@ const MobileNav = () => {
                 }
 
                 .MobileNav ul.nav-open {
-                    bottom: ${!user ? -15.15 : !user.isAdmin ? -17.6 : -19.75}rem;
+                    bottom: ${!user ? -10.6 : !user.isAdmin ? -12.6 : -14.7}rem;
                 }
 
                 .MobileNav li {
@@ -125,7 +118,7 @@ const MobileNav = () => {
                 }
     
                 .MobileNav .selected {
-                    color: ${colors.GRAYSCALE[2]};
+                    color: ${colors.GRAYSCALE[5]};
                 }
     
                 .MobileNav a:hover, .MobileNav a:focus {
@@ -143,7 +136,7 @@ const MobileNav = () => {
                     position: absolute;
                     bottom: -4px;
                     left: 0;
-                    background-color: ${colors.GRAYSCALE[2]};
+                    background-color: ${colors.GRAYSCALE[5]};
                 }
             `}</style>
         </div>

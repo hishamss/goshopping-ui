@@ -29,14 +29,14 @@ function App() {
         <Route key={routes.STORE} path={routes.STORE} exact render={() => <ListDisplay type={STORE} />} />
         <Route key={routes.ABOUT} path={routes.ABOUT} exact component={About} />
         <Route key={routes.CONTACT} path={routes.CONTACT} exact component={Contact} />
-        <Route key={routes.STORE_ITEM} path={routes.STORE_ITEM} exact component={StoreItem} />
+        <Route key={routes.STORE + '/'} path={routes.STORE} component={StoreItem} />
 
         {user
           ? // If authenticated
             [
               <Route key={routes.ORDERS} path={routes.ORDERS} exact render={() => <ListDisplay type={ORDERS} />} />,
               <Route key={routes.PROFILE} path={routes.PROFILE} exact component={Profile} />,
-              <Route key={routes.ORDER} path={routes.ORDER} exact component={Order} />
+              <Route key={routes.ORDERS + "/"} path={routes.ORDERS} component={Order} />
             ]
           : // Else
             [
@@ -47,7 +47,7 @@ function App() {
 
         {user?.isAdmin && [
           <Route key={routes.USERS} path={routes.USERS} exact render={() => <ListDisplay type={USERS} />} />,
-          <Route key={routes.USER} path={routes.USER} exact component={User} />
+          <Route key={routes.USERS + '/'} path={routes.USERS} component={User} />
         ]}
 
         {/* Redirect any valid route inputs to Home, invalid to 404 */}

@@ -4,11 +4,7 @@ import NavLogin from './NavLogin';
 import MobileNav from './MobileNav';
 import { colors } from '../../styles';
 
-interface Props {
-    
-}
-
-const Header = (props: Props) => {
+const Header = () => {
     return <header>
         <MobileNav />
         <strong className="logo">GoShopping!</strong>
@@ -18,8 +14,8 @@ const Header = (props: Props) => {
         <style>{`
             header {
                 background-color: ${colors.GRAYSCALE[0]};
-                height: 4.8rem;
-                color: ${colors.GRAYSCALE[2]};
+                height: 5rem;
+                color: ${colors.GRAYSCALE[5]};
                 display: flex;
                 align-items: center;
                 justify-content: space-around;
@@ -29,18 +25,8 @@ const Header = (props: Props) => {
             header .logo {
                 color: ${colors.LIGHTEST};
                 position: absolute;
-                top: 1.66rem;
+                top: 1.85rem;
                 left: .9rem;
-                user-select: none;
-                background-color: ${colors.GRAYSCALE[0]};
-            }
-
-            header .logo {
-                color: ${colors.LIGHTEST};
-                position: absolute;
-                top: 1.45rem;
-                left: 1rem;
-                font-size: 1.1rem;
                 user-select: none;
             }
         `}</style>

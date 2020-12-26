@@ -24,6 +24,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
+    "dev": "json-server --watch db.json --port 3001 && react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -46,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "json-server": "^0.16.3"
   }
 }

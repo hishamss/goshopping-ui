@@ -25,12 +25,8 @@ const Nav = () => {
         </ul>
 
         <style>{`
-            nav { 
-                margin-bottom: .075rem;
-            }
-
             nav a {
-                color: ${colors.GRAYSCALE[2]};
+                color: ${colors.GRAYSCALE[5]};
                 outline: none;
                 user-select: none;
                 font-size: 1.25rem;

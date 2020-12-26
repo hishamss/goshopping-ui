@@ -23,7 +23,7 @@ const Footer = () => {
                 justify-content: center;
                 align-items: center;
                 background-color: ${colors.GRAYSCALE[1]};
-                color: ${colors.GRAYSCALE[2]};
+                color: ${colors.GRAYSCALE[5]};
                 text-align: center;
             }
 

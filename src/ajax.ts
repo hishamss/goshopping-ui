@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { apiRoutes as api } from './resources';
 import { User, StoreItem, Order, Tag } from './types';
-import { LoginForm } from './types';
+import { LoginForm, EditUsernameForm, EditPasswordForm } from './types';
 
 // Many of these functions are nearly identical to each other and may be able to be merged into a reusable function if isolation of concerns is not especially desired
 
@@ -27,6 +27,26 @@ export async function login(formData : LoginForm) : Promise<User|null>{
     }
 }
 
+export async function editUsername(formData : EditUsernameForm) : Promise<User|null> {
+    try {
+        const { data } = await axios.post(api.EDIT_USERNAME, formData);
+        return (data ? data as User : null);
+    } catch (e) {
+        console.log(e);
+        throw new Error('Error updating username');
+    }
+}
+
+export async function editPassword(formData : EditPasswordForm) : Promise<User|null> {
+    try {
+        const { data } = await axios.post(api.EDIT_PASSWORD, formData);
+        return (data ? data as User : null);
+    } catch (e) {
+        console.log(e);
+        throw new Error('Error updating password');
+    }
+}
+
 
 // Store Items
 
@@ -40,9 +60,9 @@ export async function getStoreItems() : Promise<[StoreItem]|[]> {
     }
 }
 
-export async function getStoreItem() : Promise<StoreItem|null> {
+export async function getStoreItem(id : number) : Promise<StoreItem|null> {
     try {
-        const { data } = await axios.get(api.ITEM);
+        const { data } = await axios.get(api.ITEM + `/${id}`);
         return (data ? data as StoreItem : null);
     } catch (e) {
         console.log(e);
@@ -52,16 +72,6 @@ export async function getStoreItem() : Promise<StoreItem|null> {
 
 
 // Orders
-
-export async function getOrdersForUser(user : User) : Promise<[Order]|[]> {
-    try {
-        const { data } = await axios.get(api.ORDER);
-        return (Array.isArray(data) ? data as [Order] : []);
-    } catch (e) {
-        console.log(e);
-        return [];
-    }
-}
 
 export async function getAllOrders() : Promise<[Order]|[]> {
     try {
@@ -73,19 +83,20 @@ export async function getAllOrders() : Promise<[Order]|[]> {
     }
 }
 
-export async function getOrderById(id : number) : Promise<Order|null> {
+export async function getOrdersForUser(user : User) : Promise<[Order]|[]> {
     try {
-        const { data } = await axios.get(api.ORDER + `/${id}`);
-        return (data ? data as Order : null);
+        let { data } = await axios.get(api.ORDER + `/${user.id}`); data = [data]; // for json-server
+        return (Array.isArray(data) ? data as [Order] : []);
     } catch (e) {
         console.log(e);
-        return null;
+        return [];
     }
 }
 
-export async function getOrderByUserId(id : number) : Promise<Order|null> {
+
+export async function getOrderById(id : number) : Promise<Order|null> {
     try {
-        const { data } = await axios.get(api.ORDER + `/UID=${id}`);
+        const { data } = await axios.get(api.ORDER + `/${id}`);
         return (data ? data as Order : null);
     } catch (e) {
         console.log(e);

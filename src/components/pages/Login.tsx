@@ -6,7 +6,6 @@ import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/actions';
 import { LoginForm } from '../../types';
-// import { login, signup } from '../../ajax';
 
 interface Props extends RouteComponentProps {
     // Tell the component which version to render with string types (exported from store/types)
@@ -31,7 +30,9 @@ const Login = ({ type, history } : Props) => {
             const userExists = ['user', 'admin'].includes(username);
             if (!isLogin || userExists) {
                 if ((isLogin && password === 'pass') || (!isLogin && !userExists)) {
-                    dispatch( updateUser({ username, isAdmin: username === 'admin', id: username === 'admin' ? 0 : 1 }) );
+                    dispatch( updateUser({ username, isAdmin: username === 'admin', id: !isLogin
+                        ? 3
+                        : (username === 'admin') ? 1 : 2 }) );
                     history.push(routes.HOME);
                     return;
                 } else return setError(isLogin ? 'Invalid credentials' : 'Username not available');

@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-interface Props extends RouteComponentProps {
-    to : string;
+interface Props {
+    to? : string;
 }
 
 // Redirect to any route by passing it to the "to" property. Redirects to home by default.
-const Redirect = ({ history, to='/' } : Props) => {
+const Redirect = ({ to='/' } : Props) => {
+    const history = useHistory();
     useEffect(() => history.push(to));
 
     return <></>

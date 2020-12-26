@@ -52,10 +52,6 @@ const ListDisplay = ({ type, history } : Props) => {
         <h1 className="heading">{heading}</h1>
         <div className="prompt">{prompt}</div>
         <List list={listItems} type={type} />
-    
-        <style>{`
-
-        `}</style>
     </div>
 }
 
