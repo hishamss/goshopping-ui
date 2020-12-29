@@ -4,6 +4,7 @@ export const routes = {
     HOME: '/',
     ABOUT: '/about',
     CONTACT: '/contact',
+    PAYMENT: '/payment',
     PROFILE: '/profile',
     SIGN_UP: '/signup',
     LOG_IN: '/login',
@@ -21,5 +22,6 @@ export const apiRoutes : any = Object.entries({
     ORDER: 'order',
     USER: 'user',
     ITEM: 'item',
-    TAG: 'tag'
+    TAG: 'tag',
+    PAY: 'pay'
 }).reduce((acc, cur) => ({ ...acc, [cur[0]]: API + cur[1] }), {});

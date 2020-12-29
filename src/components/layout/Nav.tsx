@@ -22,6 +22,7 @@ const Nav = () => {
             }
             <li> <NavLink to={routes.ABOUT} exact activeClassName="selected">About</NavLink> </li>
             <li> <NavLink to={routes.CONTACT} exact activeClassName="selected">Contact</NavLink> </li>
+            <li> <NavLink to={routes.PAYMENT} exact activeClassName="selected">Payment</NavLink> </li>
         </ul>
 
         <style>{`

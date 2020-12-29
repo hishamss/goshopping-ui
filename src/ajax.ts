@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiRoutes as api } from './resources';
-import { User, StoreItem, Order, Tag } from './types';
+import { User, StoreItem, Order, Tag, PaymentResponse, PaymentRequest } from './types';
 import { LoginForm, EditUsernameForm, EditPasswordForm } from './types';
 
 // Many of these functions are nearly identical to each other and may be able to be merged into a reusable function if isolation of concerns is not especially desired
@@ -139,3 +139,15 @@ export async function getTags() : Promise<[Tag]|[]> {
         return [];
     }
 }
+
+export async function charge(formData: PaymentRequest): Promise<PaymentResponse|null>{
+    //export async function charge(formData: PaymentRequest){
+    //console.log(`Stripe Token: ${formData.id}, Amount in cents: ${formData.amount}`);
+    try {
+        const { data } = await axios.post('/pay', formData);
+        return (data ? data as PaymentResponse : null);
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+} 

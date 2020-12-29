@@ -48,3 +48,11 @@ export interface EditPasswordForm {
     password : string;
     newPassword : string;
 }
+export interface PaymentRequest {
+    id : string;
+    amount: number;
+}
+
+export interface PaymentResponse {
+    status : string;
+}

@@ -16,6 +16,7 @@ import ListDisplay from './components/pages/ListDisplay';
 import Order from './components/pages/Order';
 import StoreItem from './components/pages/StoreItem';
 import User from './components/pages/User';
+import Payment from "./components/pages/Payment";
 import { routes } from './resources';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route key={routes.STORE} path={routes.STORE} exact render={() => <ListDisplay type={STORE} />} />
         <Route key={routes.ABOUT} path={routes.ABOUT} exact component={About} />
         <Route key={routes.CONTACT} path={routes.CONTACT} exact component={Contact} />
+        <Route key={routes.PAYMENT} path={routes.PAYMENT} exact component={Payment} />
         <Route key={routes.STORE + '/'} path={routes.STORE} component={StoreItem} />
 
         {user
