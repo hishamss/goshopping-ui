@@ -140,7 +140,7 @@ export async function getTags() : Promise<[Tag]|[]> {
     }
 }
 
-export async function charge(formData: PaymentRequest): Promise<PaymentResponse|null>{
+export async function chargeCustomerCard(formData: PaymentRequest): Promise<PaymentResponse|null>{
     //export async function charge(formData: PaymentRequest){
     //console.log(`Stripe Token: ${formData.id}, Amount in cents: ${formData.amount}`);
     try {

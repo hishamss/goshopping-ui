@@ -13,9 +13,6 @@ import Redirect from './components/pages/Redirect';
 import NotFound from './components/pages/NotFound';
 import Login from './components/pages/Login';
 import ListDisplay from './components/pages/ListDisplay';
-import Order from './components/pages/Order';
-import StoreItem from './components/pages/StoreItem';
-import User from './components/pages/User';
 import Payment from "./components/pages/Payment";
 import { routes } from './resources';
 
@@ -31,14 +28,12 @@ function App() {
         <Route key={routes.ABOUT} path={routes.ABOUT} exact component={About} />
         <Route key={routes.CONTACT} path={routes.CONTACT} exact component={Contact} />
         <Route key={routes.PAYMENT} path={routes.PAYMENT} exact component={Payment} />
-        <Route key={routes.STORE + '/'} path={routes.STORE} component={StoreItem} />
 
         {user
           ? // If authenticated
             [
               <Route key={routes.ORDERS} path={routes.ORDERS} exact render={() => <ListDisplay type={ORDERS} />} />,
-              <Route key={routes.PROFILE} path={routes.PROFILE} exact component={Profile} />,
-              <Route key={routes.ORDERS + "/"} path={routes.ORDERS} component={Order} />
+              <Route key={routes.PROFILE} path={routes.PROFILE} exact component={Profile} />
             ]
           : // Else
             [
@@ -48,8 +43,7 @@ function App() {
         }
 
         {user?.isAdmin && [
-          <Route key={routes.USERS} path={routes.USERS} exact render={() => <ListDisplay type={USERS} />} />,
-          <Route key={routes.USERS + '/'} path={routes.USERS} component={User} />
+          <Route key={routes.USERS} path={routes.USERS} exact render={() => <ListDisplay type={USERS} />} />
         ]}
 
         {/* Redirect any valid route inputs to Home, invalid to 404 */}

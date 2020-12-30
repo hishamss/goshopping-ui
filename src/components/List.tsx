@@ -43,4 +43,4 @@ const List = ({ list, type }: Props) => {
     )
 }
 
-export default List
+export default List;

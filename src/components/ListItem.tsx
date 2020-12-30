@@ -80,4 +80,4 @@ const ListItem = ({ type, item }: Props) => {
     )
 }
 
-export default ListItem
+export default ListItem;

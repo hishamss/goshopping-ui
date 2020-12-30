@@ -1,18 +1,17 @@
 import { useState, FormEvent } from 'react';
 import { SIGN_UP, LOG_IN } from '../../store/types';
 import Layout from '../layout';
-import { routes } from '../../resources';
-import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/actions';
 import { LoginForm } from '../../types';
+import Redirect from './Redirect';
 
-interface Props extends RouteComponentProps {
+interface Props {
     // Tell the component which version to render with string types (exported from store/types)
     type : typeof SIGN_UP | typeof LOG_IN;
 }
 
-const Login = ({ type, history } : Props) => {
+const Login = ({ type } : Props) => {
     const isLogin = (type === LOG_IN);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState<LoginForm>({ username: '', password: '', confirmPassword: '' });
@@ -33,8 +32,7 @@ const Login = ({ type, history } : Props) => {
                     dispatch( updateUser({ username, isAdmin: username === 'admin', id: !isLogin
                         ? 3
                         : (username === 'admin') ? 1 : 2 }) );
-                    history.push(routes.HOME);
-                    return;
+                    return <Redirect />;
                 } else return setError(isLogin ? 'Invalid credentials' : 'Username not available');
             } else return setError('Invalid credentials');
 
@@ -42,7 +40,7 @@ const Login = ({ type, history } : Props) => {
             /*
             const user = await (isLogin ? login(formData) : signup(formData));
             dispatch( updateUser(user) );
-            history.push(routes.HOME);
+            return <Redirect />;
             */
         } catch (e) {
             switch (e.status) {

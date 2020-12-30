@@ -1,18 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { routes } from '../../resources';
 import { Store } from '../../types';
 import { updateUser } from '../../store/actions';
 import { colors } from '../../styles';
+import Redirect from '../pages/Redirect';
 
 const NavLogin = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const user = useSelector(({ user } : Store) => user);
 
     const logOut = () => {
         dispatch( updateUser(null) );
-        history.push(routes.HOME);
+        return <Redirect />;
     }
 
     return <div className="NavLogin">

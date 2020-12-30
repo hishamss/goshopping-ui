@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import Layout from '../layout';
 import { STORE, ORDERS, USERS } from '../../store/types';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
 import { Store } from '../../types';
 import List from '../List';
 import { getOrdersForUser, getStoreItems, getUsers } from '../../ajax';
 import { ListItemTypes } from '../../types';
+import Redirect from './Redirect';
 
-interface Props extends RouteComponentProps {
+interface Props {
     // Tell the component which version to render with string types (exported from store/types)
     type : typeof STORE | typeof ORDERS | typeof USERS;
 }
@@ -16,7 +16,7 @@ interface Props extends RouteComponentProps {
 // Return a div with a class name of the component, include style tags below all JSX but inside component div
 
 // If component has three versions, render with a switch case (This pattern is likely too verbose and we may be better off with unique components; Just trying it out if applicable -Nick)
-const ListDisplay = ({ type, history } : Props) => {
+const ListDisplay = ({ type } : Props) => {
     const user = useSelector(({ user } : Store) => user);
     const [listItems, setListItems] = useState<[ListItemTypes]|[]>([]);
     const [heading, setHeading] = useState<string>('Store');
@@ -31,22 +31,22 @@ const ListDisplay = ({ type, history } : Props) => {
                     setListItems(await getStoreItems());
                     break;
                 case ORDERS:
-                    if (!user) return history.push('/');
+                    if (!user) return <Redirect />;
                     setHeading('My Orders');
                     setPrompt('View current and past orders for your account');
                     setListItems(await getOrdersForUser(user));
                     break;
                 case USERS:
-                    if (!user?.isAdmin) return history.push('/');
+                    if (!user?.isAdmin) return <Redirect />;
                     setHeading('Users');
                     setPrompt('View and manage registered users');
                     setListItems(await getUsers());
                     break;
                 default:
-                    setHeading('Page Unknown');
+                    return <Redirect />
             }
         })();
-    }, [type, user, history]);
+    }, [type, user]);
 
     return <div className="ListDisplay">
         <h1 className="heading">{heading}</h1>
