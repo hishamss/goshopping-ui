@@ -14,10 +14,10 @@ const Nav = () => {
             <li> <NavLink to={routes.STORE} exact activeClassName="selected">Store</NavLink> </li>
 
             {user &&
-                <li> <NavLink to={routes.ORDERS} exact activeClassName="selected">{!user.isAdmin && 'My '}Orders</NavLink> </li>
+                <li> <NavLink to={routes.ORDERS} exact activeClassName="selected">{!user.admin && 'My '}Orders</NavLink> </li>
             }
             
-            {user?.isAdmin &&
+            {user?.admin &&
                 <li> <NavLink to={routes.USERS} exact activeClassName="selected">Users</NavLink> </li>
             }
             <li> <NavLink to={routes.ABOUT} exact activeClassName="selected">About</NavLink> </li>

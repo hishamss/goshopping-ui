@@ -13,7 +13,7 @@ interface Props {
 const ListItem = ({ type, item }: Props) => {
     const [itemRoute, setItemRoute] = useState<typeof routes.STORE | typeof routes.ORDERS | typeof routes.USERS>('');
     const [titleKey, setTitleKey] = useState<keyof typeof item|''>('');
-
+    
     useEffect(() => {
         switch (type) {
             case USERS:
@@ -36,12 +36,27 @@ const ListItem = ({ type, item }: Props) => {
     return (
         <div className="ListItem" key={item.id}>
             <Link to={`${itemRoute}/${item.id}`}><strong>{item[titleKey as keyof typeof item]}</strong></Link>
-            <ul>
+            <table className="list-item-details">
+                <tbody>
+                    <tr>
+                        {Object.entries(item)
+                            .filter(([key]) => key !== titleKey)
+                            .map(([key]) => <td key={key}>{key}</td>)}
+                    </tr>
+                    <tr>
+                        {Object.entries(item)
+                            .filter(([key]) => key !== titleKey)
+                            .map(([key, val]) => <td key={key}>{val.toString()}</td>)
+                        }
+                    </tr>
+                </tbody>
+            </table>
+            {/* <ul>
                 {Object.entries(item)
                     .filter(([key]) => key !== titleKey)
                     .map(([key, val]) => <li key={key}><i>{key}</i>: {val.toString()}</li>)
                 }
-            </ul>
+            </ul> */}
 
             <style>{`
                 .ListItem {

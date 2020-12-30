@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.sass';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Store } from './types';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUser } from './store/actions';
+import { Store, User } from './types';
 import { SIGN_UP, LOG_IN, STORE, ORDERS, USERS } from './store/types';
 
 import Home from './components/pages/Home';
@@ -15,9 +16,23 @@ import Login from './components/pages/Login';
 import ListDisplay from './components/pages/ListDisplay';
 import Payment from "./components/pages/Payment";
 import { routes } from './resources';
+import axios from 'axios';
 
 function App() {
+  const dispatch = useDispatch();
   const user = useSelector(({ user } : Store) => user);
+
+  // Re-establish user/auth header on page refresh
+  useEffect(() => {
+    const userString = sessionStorage.getItem('user');
+    const jwt = sessionStorage.getItem('jwt');
+    if (userString) {
+      const currentUser : User = JSON.parse(userString);
+      dispatch( updateUser(currentUser) );
+    }
+
+    if (jwt) axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt;
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
@@ -42,7 +57,7 @@ function App() {
             ]
         }
 
-        {user?.isAdmin && [
+        {user?.admin && [
           <Route key={routes.USERS} path={routes.USERS} exact render={() => <ListDisplay type={USERS} />} />
         ]}
 

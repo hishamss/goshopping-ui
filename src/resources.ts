@@ -1,4 +1,5 @@
-export const API = new URL('http://localhost:3001');
+// export const API = new URL('http://localhost:3001');
+export const API = new URL('http://localhost:4321/api');
 
 export const routes = {
     HOME: '/',
@@ -14,14 +15,9 @@ export const routes = {
 }
 
 export const apiRoutes : any = Object.entries({
-    SIGN_UP: 'signup',
-    LOG_IN: 'login',
-    LOG_OUT: 'logout',
-    EDIT_USERNAME: 'user/edit/username',
-    EDIT_PASSWORD: 'user/edit/password',
-    ORDER: 'order',
-    USER: 'user',
-    ITEM: 'item',
-    TAG: 'tag',
-    PAY: 'pay'
+    LOG_IN: '/login',
+    ORDER: '/order',
+    USER: '/user',
+    ITEM: '/item',
+    TAG: '/tags',
 }).reduce((acc, cur) => ({ ...acc, [cur[0]]: API + cur[1] }), {});

@@ -3,8 +3,9 @@ import { SIGN_UP, LOG_IN } from '../../store/types';
 import Layout from '../layout';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/actions';
-import { LoginForm } from '../../types';
+import { PostableUser } from '../../types';
 import Redirect from './Redirect';
+import { login, signup } from '../../ajax';
 
 interface Props {
     // Tell the component which version to render with string types (exported from store/types)
@@ -14,39 +15,25 @@ interface Props {
 const Login = ({ type } : Props) => {
     const isLogin = (type === LOG_IN);
     const dispatch = useDispatch();
-    const [formData, setFormData] = useState<LoginForm>({ username: '', password: '', confirmPassword: '' });
+    const [formData, setFormData] = useState<PostableUser>({ username: '', password: '' });
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
 
     const onChange = (e : FormEvent<HTMLInputElement>) => setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
 
     const onSubmit = async (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!isLogin && (formData.password !== formData.confirmPassword)) return setError('Passwords must match');
+        if (!isLogin && (formData.password !== confirmPassword)) return setError('Passwords must match');
 
         try {
-            // For testing purposes
-            const { username, password } = formData;
-            const userExists = ['user', 'admin'].includes(username);
-            if (!isLogin || userExists) {
-                if ((isLogin && password === 'pass') || (!isLogin && !userExists)) {
-                    dispatch( updateUser({ username, isAdmin: username === 'admin', id: !isLogin
-                        ? 3
-                        : (username === 'admin') ? 1 : 2 }) );
-                    return <Redirect />;
-                } else return setError(isLogin ? 'Invalid credentials' : 'Username not available');
-            } else return setError('Invalid credentials');
-
-            // Normal procedure
-            /*
             const user = await (isLogin ? login(formData) : signup(formData));
             dispatch( updateUser(user) );
             return <Redirect />;
-            */
-        } catch (e) {
-            switch (e.status) {
+        } catch (status) {
+            switch (status) {
                 case 401:
                     return setError('Ivalid credentials');
-                case 422:
+                case 409:
                     return setError('Username not available');
                 default:
                     setError('Something went wrong');
@@ -61,7 +48,7 @@ const Login = ({ type } : Props) => {
         <form onSubmit={onSubmit} autoComplete="off">
             <input type="text" required name="username" placeholder="username" onChange={onChange} />
             <input type="password" required name="password" placeholder="password" onChange={onChange} />
-            {!isLogin && <input type="password" required name="confirmPassword" placeholder="confirm password" onChange={onChange} />}
+            {!isLogin && <input type="password" required name="confirmPassword" placeholder="confirm password" onChange={e => setConfirmPassword(e.currentTarget.value)} />}
             <button>Submit</button>
         </form>
 

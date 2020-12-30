@@ -5,12 +5,15 @@ import { Store } from '../../types';
 import { updateUser } from '../../store/actions';
 import { colors } from '../../styles';
 import Redirect from '../pages/Redirect';
+import { logout } from '../../ajax';
 
 const NavLogin = () => {
     const dispatch = useDispatch();
     const user = useSelector(({ user } : Store) => user);
 
     const logOut = () => {
+        // Reset session storage
+        logout();
         dispatch( updateUser(null) );
         return <Redirect />;
     }

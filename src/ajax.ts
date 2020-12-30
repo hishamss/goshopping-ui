@@ -1,46 +1,47 @@
 import axios from 'axios';
 import { apiRoutes as api } from './resources';
-import { User, StoreItem, Order, Tag, PaymentResponse, PaymentRequest } from './types';
-import { LoginForm, EditUsernameForm, EditPasswordForm } from './types';
-
-// Many of these functions are nearly identical to each other and may be able to be merged into a reusable function if isolation of concerns is not especially desired
+import * as models from './types';
+import jwtDecode from 'jwt-decode';
 
 // Authentication/Registration
 
-export async function signup(formData : LoginForm) : Promise<User|null>{
+export async function signup(formData : models.PostableUser) : Promise<models.User>{
     try {
-        const { data } = await axios.post(api.SIGN_UP, formData);
-        return (data ? data as User : null);
+        const { data } = await axios.post(api.USER, formData);
+        return data as models.User;
     } catch (e) {
         console.log(e);
-        return null;
+        throw e.response.status;
     }
 }
 
-export async function login(formData : LoginForm) : Promise<User|null>{
+export async function login(formData : models.LoginRequest) : Promise<models.User>{
     try {
-        const { data } = await axios.post(api.LOG_IN, formData);
-        return (data ? data as User : null);
+        const { data: { jwt } } = await axios.post<models.LoginResponse>(api.LOG_IN, formData);
+        const o : any = jwtDecode(jwt);
+        const auth : models.Auth = JSON.parse(o.auth);
+        const user : models.User = { ...auth, username: formData.username };
+        sessionStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('jwt', jwt);
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt;
+        return user;
     } catch (e) {
         console.log(e);
-        return null;
+        throw e.response.status;
     }
 }
 
-export async function editUsername(formData : EditUsernameForm) : Promise<User|null> {
-    try {
-        const { data } = await axios.post(api.EDIT_USERNAME, formData);
-        return (data ? data as User : null);
-    } catch (e) {
-        console.log(e);
-        throw new Error('Error updating username');
-    }
+/** Reset session storage */
+export function logout() {
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('jwt');
+    delete axios.defaults.headers.common['Authorization'];
 }
 
-export async function editPassword(formData : EditPasswordForm) : Promise<User|null> {
+export async function editPassword(formData : models.PutableUser) : Promise<models.User|null> {
     try {
-        const { data } = await axios.post(api.EDIT_PASSWORD, formData);
-        return (data ? data as User : null);
+        const { data } = await axios.put(api.EDIT_PASSWORD, formData);
+        return data as models.User;
     } catch (e) {
         console.log(e);
         throw new Error('Error updating password');
@@ -50,102 +51,142 @@ export async function editPassword(formData : EditPasswordForm) : Promise<User|n
 
 // Store Items
 
-export async function getStoreItems() : Promise<[StoreItem]|[]> {
+export async function getStoreItems(params? : models.ItemSearchQueryParams) : Promise<models.Item[]> {
     try {
-        const { data } = await axios.get(api.ITEM);
-        return (Array.isArray(data) ? data as [StoreItem] : []);
+        const { data } = await axios({
+            url: api.ITEM,
+            params
+        });
+        return (data as models.Item[]);
     } catch (e) {
         console.log(e);
         return [];
     }
 }
 
-export async function getStoreItem(id : number) : Promise<StoreItem|null> {
+export async function getStoreItem(id : number) : Promise<models.Item|null> {
     try {
         const { data } = await axios.get(api.ITEM + `/${id}`);
-        return (data ? data as StoreItem : null);
+        return (data as models.Item);
     } catch (e) {
         console.log(e);
         return null;
     }
 }
 
+export async function deleteStoreItem(id : number) {
+    try {
+        axios.delete(api.ITEM + `/${id}`);
+    } catch (e) {
+        console.log(e);
+        throw new Error('Failed to delete item');
+    }
+}
+
+
+export async function createStoreItem(formData : models.PostableItem) : Promise<models.Item> {
+    try {
+        const { data } = await axios.post(api.ITEM, formData);
+        return data;
+    } catch (e) {
+        console.log(e);
+        throw new Error('Failed to create item');
+    }
+}
+
+export async function updateStoreItem(formData : models.PutableItem) : Promise<models.Item> {
+    try {
+        const { data } = await axios.put(api.ITEM + `/${formData.id}`, formData);
+        return data;
+    } catch (e) {
+        throw new Error('Failed to update item');
+    }
+}
 
 // Orders
 
-export async function getAllOrders() : Promise<[Order]|[]> {
+export async function getOrders(uid? : number) : Promise<models.Order[]> {
     try {
-        const { data } = await axios.get(api.ORDER);
-        return (Array.isArray(data) ? data as [Order] : []);
+        const { data } = await axios.get(api.ORDER + (uid ? `?uid=${uid}` : ''));
+        return data as models.Order[];
     } catch (e) {
         console.log(e);
         return [];
     }
 }
 
-export async function getOrdersForUser(user : User) : Promise<[Order]|[]> {
-    try {
-        let { data } = await axios.get(api.ORDER + `/${user.id}`); data = [data]; // for json-server
-        return (Array.isArray(data) ? data as [Order] : []);
-    } catch (e) {
-        console.log(e);
-        return [];
-    }
-}
-
-
-export async function getOrderById(id : number) : Promise<Order|null> {
+export async function getOrderById(id : number) : Promise<models.Order|null> {
     try {
         const { data } = await axios.get(api.ORDER + `/${id}`);
-        return (data ? data as Order : null);
+        return data as models.Order;
     } catch (e) {
         console.log(e);
         return null;
+    }
+}
+
+export async function createOrder(formData : models.PostableOrder) : Promise<models.Order> {
+    try {
+        const { data } = await axios.post<models.Order>(api.ORDER, formData);
+        return data as models.Order;
+    } catch (e) {
+        console.log(e);
+        throw new Error('Failed to create order');
     }
 }
 
 
 // Users
 
-export async function getUsers() : Promise<[User]|[]> {
+export async function getUsers() : Promise<models.User[]> {
     try {
-        const { data } = await axios.get(api.USER);
-        return (Array.isArray(data) ? data as [User] : []);
+        const { data } = await axios.get<models.User[]>(api.USER);
+        return (Array.isArray(data) ? data as models.User[] : []);
     } catch (e) {
         console.log(e);
         return [];
     }
 }
 
-export async function getUser(id : number) : Promise<User|null> {
+export async function getUser(id : number) : Promise<models.User|null> {
     try {
-        const { data } = await axios.get(api.USER + `/${id}`);
-        return (data ? data as User : null);
+        const { data } = await axios.get<models.User>(api.USER + `/${id}`);
+        return data;
     } catch (e) {
         console.log(e);
         return null;
     }
 }
 
+export async function deleteUser(id : number) {
+    try {
+        axios.delete(api.USER + `/${id}`);
+    } catch (e) {
+        console.log(e);
+        throw new Error('Failed to delete user');
+    }
+}
+
 
 // Tags
 
-export async function getTags() : Promise<[Tag]|[]> {
+export async function getTags() : Promise<models.Tag[]> {
     try {
         const { data } = await axios.get(api.TAG);
-        return (Array.isArray(data) ? data as [Tag] : []);
+        return (Array.isArray(data) ? data as models.Tag[] : []);
     } catch (e) {
         console.log(e);
         return [];
     }
 }
 
-export async function chargeCustomerCard(formData: PaymentRequest): Promise<PaymentResponse|null>{
+
+export async function chargeCustomerCard(formData: models.PaymentRequest): Promise<models.PaymentResponse|null>{
     //export async function charge(formData: PaymentRequest){
     //console.log(`Stripe Token: ${formData.id}, Amount in cents: ${formData.amount}`);
     try {
-        const { data } = await axios.post('/pay', formData);
-        return (data ? data as PaymentResponse : null);
+        const { data } = await axios.post(api.ORDER, formData);
+        return data as models.PaymentResponse;
     } catch (e) {
         console.log(e);
         return null;

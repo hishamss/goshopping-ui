@@ -1,29 +1,29 @@
-export interface Action {
-    type : string;
-    payload? : any;
-}
-
-export interface Store {
-    user : User | null;
-}
-
-export interface User {
-    id : number;
+export interface LoginRequest {
     username : string;
-    isAdmin : boolean;
+    password : string;
 }
 
-export interface StoreItem {
-    id : number;
-    title : string;
-    description: string;
+export interface LoginResponse {
+    jwt : string;
 }
 
-export interface Order {
+export interface Auth {
     id : number;
-    itemId: number;
-    quantity: number;
-    userId: number;
+    admin : boolean;
+}
+
+export interface User extends Auth {
+    username : string;
+}
+
+export interface PutableUser {
+    newPass : string;
+    oldPass : string;
+}
+
+export interface PostableUser {
+    username : string;
+    password : string;
 }
 
 export interface Tag {
@@ -31,23 +31,72 @@ export interface Tag {
     name : string;
 }
 
-export type ListItemTypes = StoreItem | Order | User;
-
-export interface LoginForm {
-    username : string;
-    password : string;
-    confirmPassword? : string;
+export interface BareTag {
+    name : string;
 }
 
-export interface EditUsernameForm {
-    newUsername : string;
-    password : string;
+export interface Item {
+    id : number;
+    name : string;
+    price : number;
+    description : string;
+    img? : string;
+    tags : Tag[];
 }
 
-export interface EditPasswordForm {
-    password : string;
-    newPassword : string;
+export interface PostableItem {
+    name : string;
+    price : number;
+    description : string;
+    img? : string;
+    tags : BareTag[];
 }
+
+export interface PutableItem extends PostableItem {
+    id : number;
+}
+
+export interface OrderItem extends Item {
+    quantity : number;
+}
+
+export interface PostableOrderItem {
+    id : number;
+    quantity : number;
+}
+
+export interface Order {
+    id : number;
+    date : number;
+    userID : number;
+    items : OrderItem[];
+}
+
+export interface PostableOrder {
+    userID : number;
+    stripeToken : string;
+    items : PostableOrderItem[];
+}
+
+export interface ItemSearchQueryParams {
+    text? : string;
+    tag? : string;
+    quantity? : number;
+    page? : number;
+}
+
+export interface Action {
+    type : string;
+    payload? : any;
+}
+
+export interface Store {
+    user : User | null;
+    cart : Item[];
+}
+
+export type ListItemTypes = Order | User | Item;
+
 export interface PaymentRequest {
     id : string;
     amount: number;

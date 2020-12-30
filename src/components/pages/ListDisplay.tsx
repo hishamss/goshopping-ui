@@ -4,7 +4,7 @@ import { STORE, ORDERS, USERS } from '../../store/types';
 import { useSelector } from 'react-redux';
 import { Store } from '../../types';
 import List from '../List';
-import { getOrdersForUser, getStoreItems, getUsers } from '../../ajax';
+import { getOrders, getStoreItems, getUsers } from '../../ajax';
 import { ListItemTypes } from '../../types';
 import Redirect from './Redirect';
 
@@ -18,7 +18,7 @@ interface Props {
 // If component has three versions, render with a switch case (This pattern is likely too verbose and we may be better off with unique components; Just trying it out if applicable -Nick)
 const ListDisplay = ({ type } : Props) => {
     const user = useSelector(({ user } : Store) => user);
-    const [listItems, setListItems] = useState<[ListItemTypes]|[]>([]);
+    const [listItems, setListItems] = useState<ListItemTypes[]|[]>([]);
     const [heading, setHeading] = useState<string>('Store');
     const [prompt, setPrompt] = useState<string>('Store');
 
@@ -34,10 +34,10 @@ const ListDisplay = ({ type } : Props) => {
                     if (!user) return <Redirect />;
                     setHeading('My Orders');
                     setPrompt('View current and past orders for your account');
-                    setListItems(await getOrdersForUser(user));
+                    setListItems(await getOrders(user.id));
                     break;
                 case USERS:
-                    if (!user?.isAdmin) return <Redirect />;
+                    if (!user?.admin) return <Redirect />;
                     setHeading('Users');
                     setPrompt('View and manage registered users');
                     setListItems(await getUsers());

@@ -24,3 +24,5 @@ yarn-error.log*
 
 .eslintcache
 todo.md
+src/App.css
+src/App.css.map
