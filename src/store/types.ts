@@ -6,13 +6,3 @@ export const STORE = 'STORE';
 export const ORDERS = 'ORDERS';
 
 export type ListTypes = typeof STORE | typeof ORDERS | typeof USERS;
-interface listItemTitleKeys {
-    [ORDERS] : 'id';
-    [STORE] : 'title';
-    [USERS] : 'username';
-}
-export const listItemTitleKeyMap = {
-    [ORDERS]: 'id',
-    [STORE]: 'title',
-    [USERS]: 'username'
-} as listItemTitleKeys;

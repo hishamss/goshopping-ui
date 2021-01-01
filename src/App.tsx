@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './App.sass';
+import './App.sass'; // need to change "app.sass" before push 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from './store/actions';

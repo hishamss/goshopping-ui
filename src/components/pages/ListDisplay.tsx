@@ -51,7 +51,7 @@ const ListDisplay = ({ type } : Props) => {
     return <div className="ListDisplay">
         <h1 className="heading">{heading}</h1>
         <div className="prompt">{prompt}</div>
-        <List list={listItems} type={type} />
+        <List list={listItems} />
     </div>
 }
 
