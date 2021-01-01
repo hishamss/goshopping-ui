@@ -63,7 +63,7 @@ function App() {
 
         {/* Redirect any valid route inputs to Home, invalid to 404 */}
         {Object.values(routes).map(route => <Route key={route} path={route} exact component={Redirect} />)}
-        <Route path='/' component={NotFound} />
+        <Route path={routes.HOME} component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

@@ -1,3 +1,3 @@
 # GoShopping (UI)
 
-Generic ecommerce site
+Generic ecommerce site.

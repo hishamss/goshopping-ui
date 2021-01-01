@@ -13,19 +13,19 @@ if (window.location.host.includes('localhost')) {
 export const API = new URL(url);
 
 export const routes = {
-    HOME: '/',
-    ABOUT: '/about',
-    CONTACT: '/contact',
-    PAYMENT: '/payment',
-    PROFILE: '/profile',
-    SIGN_UP: '/signup',
-    LOG_IN: '/login',
-    ORDERS: '/orders',
-    STORE: '/items',
-    USERS: '/users'
-}
+    HOME: '/goshopping-ui',
+    ABOUT: '/goshopping-ui/about',
+    CONTACT: '/goshopping-ui/contact',
+    PAYMENT: '/goshopping-ui/payment',
+    PROFILE: '/goshopping-ui/profile',
+    SIGN_UP: '/goshopping-ui/signup',
+    LOG_IN: '/goshopping-ui/login',
+    ORDERS: '/goshopping-ui/orders',
+    STORE: '/goshopping-ui/items',
+    USERS: '/goshopping-ui/users'
+};
 
-export const apiRoutes : any = Object.entries({
+export const apiRoutes: any  = Object.entries({
     LOG_IN: '/login',
     ORDER: '/order',
     USER: '/user',
