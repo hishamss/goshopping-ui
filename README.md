@@ -2,4 +2,4 @@
 
 # GoShopping (UI)
 
-Generic ecommerce site.
+Generic ecommerce site. You may view this application [here](http://54.151.78.250:8080/goshopping-ui)

@@ -21,8 +21,8 @@ export async function login(formData : models.LoginRequest) : Promise<models.Use
         const o : any = jwtDecode(jwt);
         const auth : models.Auth = JSON.parse(o.auth);
         const user : models.User = { ...auth, username: formData.username };
-        sessionStorage.setItem('user', JSON.stringify(user));
-        sessionStorage.setItem('jwt', jwt);
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('jwt', jwt);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt;
         return user;
     } catch (e) {
@@ -31,10 +31,10 @@ export async function login(formData : models.LoginRequest) : Promise<models.Use
     }
 }
 
-/** Reset session storage */
+/** Reset local storage */
 export function logout() {
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt');
     delete axios.defaults.headers.common['Authorization'];
 }
 

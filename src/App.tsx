@@ -24,8 +24,9 @@ function App() {
 
   // Re-establish user/auth header on page refresh
   useEffect(() => {
-    const userString = sessionStorage.getItem('user');
-    const jwt = sessionStorage.getItem('jwt');
+
+    const userString = localStorage.getItem('user');
+    const jwt = localStorage.getItem('jwt');
     if (userString) {
       const currentUser : User = JSON.parse(userString);
       dispatch( updateUser(currentUser) );

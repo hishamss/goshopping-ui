@@ -12,7 +12,7 @@ const NavLogin = () => {
     const user = useSelector(({ user } : Store) => user);
 
     const logOut = () => {
-        // Reset session storage
+        // Reset local storage
         logout();
         dispatch( updateUser(null) );
         return <Redirect />;
