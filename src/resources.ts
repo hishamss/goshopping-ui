@@ -31,4 +31,5 @@ export const apiRoutes: any  = Object.entries({
     USER: '/user',
     ITEM: '/item',
     TAG: '/tags',
+    EDIT_PASSWORD: '/user'
 }).reduce((acc, cur) => ({ ...acc, [cur[0]]: API + cur[1] }), {});
