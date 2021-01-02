@@ -9,7 +9,7 @@ const Footer = () => {
                 <li>Zack Garner</li>
                 <li>Hisham Saymeh</li>
                 <li>Vincent Sevilla</li>
-                <li>Eric Terreri</li>
+                <li>Erik Terreri</li>
             </ul>
             <div>&copy; 2020 Revature</div>
         </span>

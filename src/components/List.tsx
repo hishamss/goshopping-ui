@@ -1,5 +1,5 @@
 import { ListItemTypes, Item, OrderItem, Tag, Store } from "../types";
-import { ListTypes, STORE, CHECKOUT } from "../store/types";
+import { ListTypes, STORE, CHECKOUT, ORDERS } from "../store/types";
 import ListItem from "./ListItem";
 import { updateCart } from "../store/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +14,9 @@ interface Props {
 const List = ({ list, type }: Props) => {
   const dispatch = useDispatch();
   const { user, cart } = useSelector((store : Store) => store);
-const [showCaseItem, setShowCaseItem] = useState<ListItemTypes>(list[0]);
-const [message, setMessage] = useState("");
+  const [showCaseItem, setShowCaseItem] = useState<ListItemTypes>(list[0]);
+  const [message, setMessage] = useState("");
+  
   const addToCart = (e : FormEvent<HTMLFormElement>, item : Item) => {
     e.preventDefault();
     const itemToAdd : OrderItem = {
@@ -54,50 +55,52 @@ const [message, setMessage] = useState("");
   return (
     <div className="List">
         {message && <div className = "failure"> {message}</div>}
-        {!list.length && <div>No items found</div>}
-        <ul>
-            {((showCaseItem && showCaseItem !==list[0])  ? [ showCaseItem, ...list] : list).map((item) =>
-                <li key={item.id}>
-                    {[STORE, CHECKOUT].includes(type) && <img src={(item as Item).img} alt="store item" />}
+        {!list.length
+            ? <div>No items found</div>
+            : <ul>
+                {( ((type === ORDERS) && (showCaseItem && showCaseItem !== list[0])) ? [showCaseItem, ...list] : list).map((item) =>
+                    <li key={item.id}>
+                        {[STORE, CHECKOUT].includes(type) && <img src={(item as Item).img} alt="store item" />}
 
-                    <ListItem key={item.id} type={type} setMessage={setMessage} setShowCaseItem={setShowCaseItem} item={  Object.entries(item)
-                        .reduce((acc, [key, val]) =>
-                            ['id', 'img'].includes(key)
-                                ? acc
-                                : ({ ...acc, [key]: (key === 'tags')
-                                    ? val.map(({ name } : Tag) => name)
-                                    : (key === 'price') ? `$${val}` : val }),
-                        {}) as ListItemTypes} 
-                    />
-                    
-                    {type === STORE &&
-                        <form className="adjust-cart-store" onSubmit={e => addToCart(e, item as Item)}>
-                            <div className="success"></div>
-                            <input
-                                type="number"
-                                name="quantity"
-                                placeholder="quantity"
-                                min={1}
-                                required
-                                onClick={e => {
-                                    const form = e.currentTarget.parentElement;
-                                    if (form) form.children[0].innerHTML = '';
-                                }}
-                            />
-                            <button>ADD TO CART</button>
-                        </form>
-                    }
+                        <ListItem key={item.id} type={type} setMessage={setMessage} setShowCaseItem={setShowCaseItem} item={  Object.entries(item)
+                            .reduce((acc, [key, val]) =>
+                                ['id', 'img'].includes(key)
+                                    ? acc
+                                    : ({ ...acc, [key]: (key === 'tags')
+                                        ? val.map(({ name } : Tag) => name)
+                                        : (key === 'price') ? `$${val}` : val }),
+                            {}) as ListItemTypes} 
+                        />
+                        
+                        {type === STORE &&
+                            <form className="adjust-cart-store" onSubmit={e => addToCart(e, item as Item)}>
+                                <div className="success"></div>
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    placeholder="quantity"
+                                    min={1}
+                                    required
+                                    onClick={e => {
+                                        const form = e.currentTarget.parentElement;
+                                        if (form) form.children[0].innerHTML = '';
+                                    }}
+                                />
+                                <button>ADD TO CART</button>
+                            </form>
+                        }
 
-                    {type === CHECKOUT &&
-                        <div className="adjust-cart-checkout">
-                            <button style={{ backgroundColor: 'turquoise' }} onClick={() => adjustCartQuantity(item.id)}>+</button>
-                            <button style={{ backgroundColor: 'red' }} onClick={() => adjustCartQuantity(item.id, true)}>-</button>
-                            <button onClick={() => adjustCartQuantity(item.id, true, true)}>Drop All</button>
-                        </div>
-                    }
-                </li>
-            )}
-        </ul>
+                        {type === CHECKOUT &&
+                            <div className="adjust-cart-checkout">
+                                <button style={{ backgroundColor: 'turquoise' }} onClick={() => adjustCartQuantity(item.id)}>+</button>
+                                <button style={{ backgroundColor: 'red' }} onClick={() => adjustCartQuantity(item.id, true)}>-</button>
+                                <button onClick={() => adjustCartQuantity(item.id, true, true)}>Drop All</button>
+                            </div>
+                        }
+                    </li>
+                )}
+            </ul>
+        }
 
         <style>{`
             .List {

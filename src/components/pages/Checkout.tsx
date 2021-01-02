@@ -13,10 +13,7 @@ const Checkout = () => {
         <div className="Checkout">
             <h1 className="heading">{user ? capitalize(user.username) + "'s" : 'My'} Cart</h1>
             <div className="prompt">{cart?.length ? "Here's what items are in your cart" : 'Visit the "Store" page to add items to your cart!'}</div>
-            {cart
-                ? <List list={cart} type={CHECKOUT} />
-                : <div>Loading...</div>
-            }
+            <List type={CHECKOUT} list={cart || []} />
             <Payment />
         </div>
     )

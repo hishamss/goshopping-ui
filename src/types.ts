@@ -87,8 +87,9 @@ export interface PostableOrder {
 export interface ItemSearchQueryParams {
     text? : string;
     tag? : string;
-    quantity? : number;
-    page? : number;
+    quantity : number;
+    page : number;
+    sortBy? : string;
 }
 
 export interface Action {

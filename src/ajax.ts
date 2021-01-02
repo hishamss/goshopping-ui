@@ -51,16 +51,7 @@ export async function editPassword(formData : models.PutableUser) : Promise<mode
 
 // Store Items
 
-export async function getStoreItems(params? : models.ItemSearchQueryParams) : Promise<models.Item[]> {
-    const defaultParams: models.ItemSearchQueryParams = {
-        quantity: 10
-    };
-
-    params = {
-        ...defaultParams,
-        ...(params || {})
-    }
-
+export async function getStoreItems(params : models.ItemSearchQueryParams) : Promise<models.Item[]> {
     try {
         const { data } = await axios({
             url: api.ITEM,

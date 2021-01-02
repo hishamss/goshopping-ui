@@ -37,7 +37,7 @@ const calcHash = () => {
   exec('git add .', execOpts);
 
   if (fs.existsSync(hashFile)) {
-    exec(`git rm --cached ${hashFile}`, execOpts);
+    exec(`git rm --cached "${hashFile}"`, execOpts);
   }
 
   const hash = exec('git write-tree', execOpts).toString().trim();
