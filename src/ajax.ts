@@ -190,14 +190,19 @@ export async function getTags() : Promise<models.Tag[]> {
 }
 
 
-export async function chargeCustomerCard(formData: models.PaymentRequest): Promise<models.PaymentResponse|null>{
-    //export async function charge(formData: PaymentRequest){
-    //console.log(`Stripe Token: ${formData.id}, Amount in cents: ${formData.amount}`);
+// Payment
+
+export async function chargeCustomerCard(formData: models.PostableOrder): Promise<models.OrderResponse>{
     try {
-        const { data } = await axios.post(api.ORDER, formData);
-        return data as models.PaymentResponse;
+        const {data, status} = await axios.post(api.ORDER, formData);
+  
+        const response:models.OrderResponse = {
+            data,
+            status,
+        };
+        return response;
     } catch (e) {
         console.log(e);
-        return null;
+        throw e;
     }
 } 

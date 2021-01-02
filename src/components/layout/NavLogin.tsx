@@ -1,43 +1,60 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { routes } from '../../resources';
-import { Store } from '../../types';
-import { updateUser } from '../../store/actions';
-import { colors } from '../../styles';
-import Redirect from '../pages/Redirect';
-import { logout } from '../../ajax';
+import { useSelector, useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { routes } from "../../resources";
+import { Store } from "../../types";
+import { updateUser } from "../../store/actions";
+import { colors } from "../../styles";
+import Redirect from "../pages/Redirect";
+import { logout } from "../../ajax";
 
 const NavLogin = () => {
-    const dispatch = useDispatch();
-    const user = useSelector(({ user } : Store) => user);
+  const dispatch = useDispatch();
+  const { user, cart } = useSelector((store : Store) => store);
 
-    const logOut = () => {
-        // Reset local storage
-        logout();
-        dispatch( updateUser(null) );
-        return <Redirect />;
-    }
+  const logOut = () => {
+    // Reset local storage
+    logout();
+    dispatch(updateUser(null));
+    return <Redirect />;
+  };
 
-    return <div className="NavLogin">
-        <ul>
-            {user
-                ? <>
-                    <li className="profile" key="profile"> <NavLink to={routes.PROFILE}>My Profile</NavLink> </li>
-                    <li key="logout"> <button onClick={logOut}>Log out</button> </li>
-                </>
-                :
-                    <>
-                        <li key="signup">
-                            <NavLink to={routes.SIGN_UP} exact activeClassName="selected">Sign up</NavLink>
-                        </li>
-                        <li key="login">
-                            <NavLink to={routes.LOG_IN} exact activeClassName="selected">Log in</NavLink>
-                        </li>
-                    </>
-            }
-        </ul>
+  return (
+    <div className="NavLogin">
+      <ul>
+        <li className="cart">
+          <NavLink to={routes.CHECKOUT}>
+            <span>
+              <i className="fas fa-shopping-cart"></i>
+              <span>{cart ? cart.length : 0}</span>
+            </span>
+          </NavLink>
+        </li>
+        {user ? (
+          <>
+            <li className="profile" key="profile">
+              <NavLink to={routes.PROFILE}>My Profile</NavLink>
+            </li>
+            <li key="logout">
+              <button onClick={logOut}>Log out</button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li key="signup">
+              <NavLink to={routes.SIGN_UP} exact activeClassName="selected">
+                Sign up
+              </NavLink>
+            </li>
+            <li key="login">
+              <NavLink to={routes.LOG_IN} exact activeClassName="selected">
+                Log in
+              </NavLink>
+            </li>
+          </>
+        )}
+      </ul>
 
-        <style>{`
+      <style>{`
             .NavLogin ul {
                 gap: 1.25rem;
                 height: 0;
@@ -76,6 +93,7 @@ const NavLogin = () => {
                 color: ${colors.LIGHTEST};
                 font-weight: 500;
                 font-size: 1rem;
+                margin-left: -.5rem;
             }
 
             .NavLogin .profile a:hover, .NavLogin .profile a:focus {
@@ -100,8 +118,28 @@ const NavLogin = () => {
             .NavLogin .profile a:active {
                 color: ${colors.DARKER};
             }
+
+            .NavLogin .cart {
+              margin-right: -.75rem;
+              margin-bottom: .15rem;
+            }
+            
+            .NavLogin .cart a {
+                background-color: transparent;
+                font-size: 1.5rem;
+            }
+
+            .NavLogin .fa-shopping-cart {
+                margin-right: .5rem;
+                transition: transform 100ms ease-out;
+            }
+
+            .NavLogin .fa-shopping-cart:hover {
+              transform: scale(1.125) translateY(-.1rem);
+            }
         `}</style>
     </div>
-}
+  );
+};
 
 export default NavLogin;

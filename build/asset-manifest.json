@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/goshopping-ui/static/css/main.50ce3f0e.chunk.css",
-    "main.js": "/goshopping-ui/static/js/main.65fa9874.chunk.js",
-    "main.js.map": "/goshopping-ui/static/js/main.65fa9874.chunk.js.map",
-    "runtime-main.js": "/goshopping-ui/static/js/runtime-main.8e3e62f3.js",
-    "runtime-main.js.map": "/goshopping-ui/static/js/runtime-main.8e3e62f3.js.map",
-    "static/js/2.e9ae8287.chunk.js": "/goshopping-ui/static/js/2.e9ae8287.chunk.js",
-    "static/js/2.e9ae8287.chunk.js.map": "/goshopping-ui/static/js/2.e9ae8287.chunk.js.map",
-    "static/js/3.59a4496f.chunk.js": "/goshopping-ui/static/js/3.59a4496f.chunk.js",
-    "static/js/3.59a4496f.chunk.js.map": "/goshopping-ui/static/js/3.59a4496f.chunk.js.map",
+    "main.css": "/goshopping-ui/static/css/main.0eefb66a.chunk.css",
+    "main.js": "/goshopping-ui/static/js/main.fa83b3eb.chunk.js",
+    "main.js.map": "/goshopping-ui/static/js/main.fa83b3eb.chunk.js.map",
+    "runtime-main.js": "/goshopping-ui/static/js/runtime-main.bf18ce59.js",
+    "runtime-main.js.map": "/goshopping-ui/static/js/runtime-main.bf18ce59.js.map",
+    "static/js/2.d75e7b85.chunk.js": "/goshopping-ui/static/js/2.d75e7b85.chunk.js",
+    "static/js/2.d75e7b85.chunk.js.map": "/goshopping-ui/static/js/2.d75e7b85.chunk.js.map",
+    "static/js/3.2c9cf8ee.chunk.js": "/goshopping-ui/static/js/3.2c9cf8ee.chunk.js",
+    "static/js/3.2c9cf8ee.chunk.js.map": "/goshopping-ui/static/js/3.2c9cf8ee.chunk.js.map",
     "index.html": "/goshopping-ui/index.html",
-    "static/css/main.50ce3f0e.chunk.css.map": "/goshopping-ui/static/css/main.50ce3f0e.chunk.css.map",
-    "static/js/2.e9ae8287.chunk.js.LICENSE.txt": "/goshopping-ui/static/js/2.e9ae8287.chunk.js.LICENSE.txt"
+    "static/css/main.0eefb66a.chunk.css.map": "/goshopping-ui/static/css/main.0eefb66a.chunk.css.map",
+    "static/js/2.d75e7b85.chunk.js.LICENSE.txt": "/goshopping-ui/static/js/2.d75e7b85.chunk.js.LICENSE.txt",
+    "static/media/loading.cb238f1e.gif": "/goshopping-ui/static/media/loading.cb238f1e.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.8e3e62f3.js",
-    "static/js/2.e9ae8287.chunk.js",
-    "static/css/main.50ce3f0e.chunk.css",
-    "static/js/main.65fa9874.chunk.js"
+    "static/js/runtime-main.bf18ce59.js",
+    "static/js/2.d75e7b85.chunk.js",
+    "static/css/main.0eefb66a.chunk.css",
+    "static/js/main.fa83b3eb.chunk.js"
   ]
 }

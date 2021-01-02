@@ -44,6 +44,7 @@ export interface Item {
     tags : Tag[];
 }
 
+
 export interface PostableItem {
     name : string;
     price : number;
@@ -72,6 +73,11 @@ export interface Order {
     items : OrderItem[];
 }
 
+export interface OrderResponse {
+    data: Order,
+    status: number,
+}
+
 export interface PostableOrder {
     userID : number;
     stripeToken : string;
@@ -92,16 +98,8 @@ export interface Action {
 
 export interface Store {
     user : User | null;
-    cart : Item[];
+    cart : OrderItem[];
 }
 
 export type ListItemTypes = Order | User | Item;
 
-export interface PaymentRequest {
-    id : string;
-    amount: number;
-}
-
-export interface PaymentResponse {
-    status : string;
-}

@@ -3,7 +3,7 @@ import './App.sass'; // need to change "app.sass" before push
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from './store/actions';
-import { Store, User } from './types';
+import { Store, User, OrderItem } from './types';
 import { SIGN_UP, LOG_IN, STORE, ORDERS, USERS } from './store/types';
 
 import Home from './components/pages/Home';
@@ -14,9 +14,10 @@ import Redirect from './components/pages/Redirect';
 import NotFound from './components/pages/NotFound';
 import Login from './components/pages/Login';
 import ListDisplay from './components/pages/ListDisplay';
-import Payment from "./components/pages/Payment";
+import Checkout from "./components/pages/Checkout";
 import { routes } from './resources';
 import axios from 'axios';
+import updateCart from './store/actions/updateCart';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,9 +25,9 @@ function App() {
 
   // Re-establish user/auth header on page refresh
   useEffect(() => {
-
     const userString = localStorage.getItem('user');
     const jwt = localStorage.getItem('jwt');
+
     if (userString) {
       const currentUser : User = JSON.parse(userString);
       dispatch( updateUser(currentUser) );
@@ -34,6 +35,15 @@ function App() {
 
     if (jwt) axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt;
   }, [dispatch]);
+
+  // Re-establish cart on user change/page refresh
+  useEffect(() => {
+   // let carts = JSON.parse( (localStorage.getItem('carts') || '{ guest: [] }') );
+   let json = localStorage.getItem('carts');
+   let carts = json ? JSON.parse(json) : {guest: []};
+    const userCart : OrderItem[] = (user && carts[user.id]) ? carts[user.id] : carts['guest'];
+    dispatch( updateCart(userCart) );
+  }, [user, dispatch]);
 
   return (
     <BrowserRouter>
@@ -43,7 +53,7 @@ function App() {
         <Route key={routes.STORE} path={routes.STORE} exact render={() => <ListDisplay type={STORE} />} />
         <Route key={routes.ABOUT} path={routes.ABOUT} exact component={About} />
         <Route key={routes.CONTACT} path={routes.CONTACT} exact component={Contact} />
-        <Route key={routes.PAYMENT} path={routes.PAYMENT} exact component={Payment} />
+        <Route key={routes.CHECKOUT} path={routes.CHECKOUT} exact component={Checkout} />
 
         {user
           ? // If authenticated
