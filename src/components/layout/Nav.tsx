@@ -1,12 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { routes } from '../../resources';
-import { Store } from '../../types';
-import { colors } from '../../styles';
+import React from "react";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { routes } from "../../resources";
+import { Store } from "../../types";
+import { colors } from "../../styles";
 
 const Nav = () => {
-    const user = useSelector(({ user } : Store) => user);
+  const user = useSelector(({ user }: Store) => user);
 
     return <nav>
         <ul>
@@ -23,7 +23,7 @@ const Nav = () => {
             <li> <NavLink to={routes.CONTACT} exact activeClassName="selected">Contact</NavLink> </li>
         </ul>
 
-        <style>{`
+      <style>{`
             nav a {
                 color: ${colors.GRAYSCALE[5]};
                 outline: none;
@@ -44,6 +44,6 @@ const Nav = () => {
             }
         `}</style>
     </nav>
-}
+};
 
 export default Nav;

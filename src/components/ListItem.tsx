@@ -12,7 +12,7 @@ interface Props {
     setMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ListItem = ({ type, item,setShowCaseItem, setMessage }: Props) => {
+const ListItem = ({ type, item, setShowCaseItem, setMessage }: Props) => {
     const [titleKey] = useState(listItemTitleKeys[type]);
 
     return <div className="ListItem">
@@ -31,17 +31,15 @@ const ListItem = ({ type, item,setShowCaseItem, setMessage }: Props) => {
                         .map(([key, val]) => <td key={key}>
                             {(![null, undefined, ''].includes(val))
                                 ? Array.isArray(val)
-                                    ? key ==="items" 
-                                        ? (item as Order).items.map(({name, id})=><span className="orderItemName" onClick={async()=>{
-                                        const showCaseItem= await  getStoreItem(id);
-                                           if(showCaseItem){
-                                            setShowCaseItem(showCaseItem as ListItemTypes);
-                                            setMessage("");
-                                           }else{
-                                               setMessage("Unable to load item");
-                                           }
+                                    ? (key === "items")
+                                        ? (item as Order).items.map(({name, id})=><span className="orderItemName" onClick={async () => {
+                                            const showCaseItem= await  getStoreItem(id);
+                                            if (showCaseItem) {
+                                                setShowCaseItem(showCaseItem as ListItemTypes);
+                                                setMessage("");
+                                            } else setMessage("Unable to load item");
                                         }}>{name}, </span>)    
-                                        : val.join(', ')
+                                        : val.filter(el => el).join(', ')
                                     : (key ==="date") 
                                         ? new Date(val).toLocaleDateString()
                                         : val.toString()
@@ -89,13 +87,11 @@ const ListItem = ({ type, item,setShowCaseItem, setMessage }: Props) => {
             .ListItem .title:hover {
                 color: ${colors.DARKEST};
             }
-            .ListItem .orderItemName{
-                cursor: pointer;
 
-            }
-            .ListItem .orderItemName:hover{
+            .ListItem .orderItemName:hover {
+                cursor: pointer;
                 text-decoration: underline;
-                color: ${colors.LIGHTEST}
+                color: ${colors.LIGHTER};
 
             }
         `}</style>

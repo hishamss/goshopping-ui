@@ -20,7 +20,7 @@ import updateCart from './store/actions/updateCart';
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector(({ user } : Store) => user);
+  const user = useSelector(({ user }: Store) => user);
 
   // Re-establish user/auth header on page refresh
   useEffect(() => {
@@ -28,11 +28,11 @@ function App() {
     const jwt = localStorage.getItem('jwt');
 
     if (userString) {
-      const currentUser : User = JSON.parse(userString);
-      dispatch( updateUser(currentUser) );
+      const currentUser: User = JSON.parse(userString);
+      dispatch(updateUser(currentUser));
     }
 
-    if (jwt) axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt;
+    if (jwt) axios.defaults.headers.common["Authorization"] = "Bearer " + jwt;
   }, [dispatch]);
 
   // Re-establish cart on user change/page refresh
@@ -56,18 +56,48 @@ function App() {
         {user
           ? // If authenticated
             [
-              <Route key={routes.ORDERS} path={routes.ORDERS} exact render={() => <ListDisplay type={ORDERS} />} />,
-              <Route key={routes.PROFILE} path={routes.PROFILE} exact component={Profile} />
+              <Route
+                key={routes.CHECKOUT}
+                path={routes.CHECKOUT}
+                exact
+                component={Checkout}
+              />,
+              <Route
+                key={routes.ORDERS}
+                path={routes.ORDERS}
+                exact
+                render={() => <ListDisplay type={ORDERS} />}
+              />,
+              <Route
+                key={routes.PROFILE}
+                path={routes.PROFILE}
+                exact
+                component={Profile}
+              />,
             ]
           : // Else
             [
-              <Route key={routes.SIGN_UP} path={routes.SIGN_UP} exact render={() => <Login type={SIGN_UP} />} />,
-              <Route key={routes.LOG_IN} path={routes.LOG_IN} exact render={() => <Login type={LOG_IN} />} />
-            ]
-        }
+              <Route
+                key={routes.SIGN_UP}
+                path={routes.SIGN_UP}
+                exact
+                render={() => <Login type={SIGN_UP} />}
+              />,
+              <Route
+                key={routes.LOG_IN}
+                path={routes.LOG_IN}
+                exact
+                render={() => <Login type={LOG_IN} />}
+              />,
+            ]}
 
         {user?.admin && [
-          <Route key={routes.USERS} path={routes.USERS} exact render={() => <ListDisplay type={USERS} />} />
+          <Route
+            key={routes.USERS}
+            path={routes.USERS}
+            exact
+            render={() => <ListDisplay type={USERS} />}
+          />,
         ]}
 
         {/* Redirect any valid route inputs to Home, invalid to 404 */}

@@ -141,7 +141,6 @@ export async function createOrder(formData : models.PostableOrder) : Promise<mod
 export async function getUsers() : Promise<models.User[]> {
     try {
         const { data } = await axios.get<models.User[]>(api.USER);
-        console.log(data);
         return data;
     } catch (e) {
         console.log(e);

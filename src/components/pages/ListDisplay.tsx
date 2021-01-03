@@ -22,6 +22,7 @@ const ListDisplay = ({ type, history } : Props) => {
     const [search, setSearch] = useState<ItemSearchQueryParams>({ page: 0, quantity: 10 });
     const [tags, setTags] = useState<Tag[]>([]);
     const [showPageButtons, setShowPageButtons] = useState<{pageUp:boolean;pageDown:boolean}>({ pageUp: true, pageDown: false });
+    const [viewAllOrders, setViewAllOrders] = useState<boolean>(true);
 
     useEffect(() => {
         (async () => {
@@ -33,9 +34,9 @@ const ListDisplay = ({ type, history } : Props) => {
                     break;
                 case ORDERS:
                     if (!user) return history.push(routes.STORE);
-                    setHeading('My Orders');
-                    setPrompt('View current and past orders for your account');
-                    setListItems(await getOrders(user.id));
+                    setHeading(`${user.admin ? 'All' : 'My'} Orders`);
+                    setPrompt(`View current and past orders for ${user.admin ? 'all accounts' : 'your account'}`);
+                    setListItems(await getOrders(user.admin ? undefined : user.id));
                     break;
                 case USERS:
                     if (!user?.admin) return history.push(routes.STORE);
@@ -87,9 +88,42 @@ const ListDisplay = ({ type, history } : Props) => {
         }
     }
 
+    const changeOrderView = async () => {
+        if (!user?.admin) return;
+        setListItems(await getOrders(viewAllOrders ? user?.id : undefined))
+        setHeading(`${viewAllOrders ? 'Your' : 'All'} Orders`);
+        setPrompt(`View current and past orders for ${viewAllOrders ? 'your account' : 'all accounts'}`);
+        setViewAllOrders(!viewAllOrders);
+    }
+
+    const searchOrdersByUsername = async (e : KeyboardEvent<HTMLInputElement>) => {
+        const el = e.currentTarget;
+        if (el.style.color === 'red') {
+            el.value = '';
+            el.style.color = 'black';
+            return;
+        }
+        const id = Number.parseInt(el.value);
+
+        if (e.key === 'Enter') {
+            if (id) {
+                setHeading(`Orders for User #${id}`);
+                setPrompt('View current and past orders for this user\'s account')
+                setListItems(await getOrders(id));
+            } else {
+                el.value = 'Please enter a valid number';
+                el.style.color = 'red';
+            }
+        }
+    }
+
     return <div className="ListDisplay">
         <h1 className="heading">{heading}</h1>
         <div className="prompt">{prompt}</div>
+        {(type === ORDERS && user?.admin) && <>
+            <button onClick={changeOrderView}>{viewAllOrders ? 'View My Orders' : 'View All Orders'}</button>
+            <input type="text" placeholder="Search orders by user ID" onKeyDown={searchOrdersByUsername} />
+        </>}
         {type === STORE && <SearchBar handlers={handlers} tags={tags} top showPageButtons={showPageButtons} />}
         <List type={type} list={listItems} setList={setListItems} />
         {type === STORE && <SearchBar handlers={handlers} tags={tags} top={false} showPageButtons={showPageButtons} />}

@@ -69,7 +69,7 @@ const List = ({ list, setList, type }: Props) => {
     <div className="List">
         {message && <div className="error">{message}</div>}
         {!list.length
-            ? <div>No items found</div>
+            ? (type !== CHECKOUT) ? <div>No items found</div> : null
             : <ul>
                 {( ((type === ORDERS) && (showCaseItem && showCaseItem !== list[0])) ? [showCaseItem, ...list] : list).map((item) =>
                     <li key={item.id}>
@@ -77,7 +77,7 @@ const List = ({ list, setList, type }: Props) => {
 
                         <ListItem key={item.id} type={type} setMessage={setMessage} setShowCaseItem={setShowCaseItem} item={  Object.entries(item)
                             .reduce((acc, [key, val]) =>
-                                [(type !== USERS && 'id'), 'img', 'password'].includes(key)
+                                [(![USERS, ORDERS].includes(type) && 'id'), (!user?.admin && 'userID'), 'stripeToken', 'img', 'password'].includes(key)
                                     ? acc
                                     : ({ ...acc, [key]: (key === 'tags')
                                         ? val.map(({ name } : Tag) => name)
@@ -134,13 +134,14 @@ const List = ({ list, setList, type }: Props) => {
 
             .List > ul > li {
                 display: grid;
-                grid-template-columns: 1fr 6fr 1fr;
+                grid-template-columns: 1fr 100fr 1fr;
                 gap: 2rem;
                 align-items: center;
+                margin: 0 1rem 0 .5rem;
             }
 
             .List .adjust-cart-store button, .List .adjust-cart-checkout button {
-                width: 100%;
+                width: 91.25%;
                 white-space: nowrap;
                 transition: transform 125ms ease-out;
                 border-radius: 10px;

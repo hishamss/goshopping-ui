@@ -1,24 +1,27 @@
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import loading from "../images/loading.gif";
 import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import { chargeCustomerCard } from "../ajax";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Store, PostableOrder } from '../types';
 import { colors } from '../styles';
+import { updateCartStorage } from '../util';
+import { updateCart } from '../store/actions';
 
 const CheckoutForm = () => {
-  const user = useSelector(({ user } : Store) => user);
+  const { user, cart } = useSelector((store : Store) => store);
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState<string>('');
   const loadingGIF = useRef<HTMLImageElement>(null);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event:FormEvent<HTMLFormElement>) => {
     // Block native form submission.
     event.preventDefault();
     // Prevent submission if stripe is not ready
-    if (!stripe || !elements || !user) return;
+    if (!stripe || !elements || !user || !cart.length) return;
 
     // Get a reference to a mounted CardElement. Elements knows how
     // to find your CardElement because there can only ever be one of
@@ -32,30 +35,26 @@ const CheckoutForm = () => {
         card: cardElement,
     });
     if (error) return console.log(error);
+
     if (paymentMethod?.id) {
       const formData:PostableOrder = {
         userID: user.id,
         stripeToken: paymentMethod.id,
-        items: [
-          {
-            id: 1,
-            quantity:2
-          },
-          {
-            id: 2,
-            quantity:4
-          }
-        ]
+        items: cart.map(({ id, quantity }) => ({ id, quantity }))
       };
       
-      loadingGIF.current!.style.display = 'inline';
+      if (loadingGIF.current) loadingGIF.current.style.display = 'inline';
       chargeCustomerCard(formData)
-        .then(() => setMessage("Order placed successfully"))
-        .catch(() => setMessage("Invalid card information"))
+        .then(() => {
+          setMessage("Order placed successfully");
+          dispatch( updateCart([]) );
+          updateCartStorage(user, []);
+        })
+        .catch(() => setMessage("Could not process payment"))
         .finally(() => {
           //clear card info after submit to prevent duplicate payment
           cardElement?.clear();
-          loadingGIF.current!.style.display = 'none'
+          if (loadingGIF.current) loadingGIF.current.style.display = 'none'
         });
     }
   }
@@ -63,8 +62,8 @@ const CheckoutForm = () => {
   return <div className="CheckoutForm">
     <form onSubmit={handleSubmit}>
       <CardElement />
-      <button>Pay</button>
-      <p style={{color: colors.LIGHTEST}}>{message}</p>
+      <button>Place your order</button>
+      <p style={{ color: colors.LIGHTEST }}>{message}</p>
       <img ref={loadingGIF} className="loading-gif" src={loading} alt="Loading..." />
     </form>
 
@@ -91,11 +90,29 @@ const CheckoutForm = () => {
 
 const Payment = () => {
   const [stripePromise] = useState(() => loadStripe('pk_test_51GrsxpDr6Z4R7UKUmoPXHW7swHORfQcKX7XO6D9GqXVuM1qn6m5ywhZmVmFzgxMYD6oHwkJqCneMr4oUXuIzixt4003qzTIOiD'));
+  const cart = useSelector((store : Store) => store.cart);
+  const [subtotal, setSubtotal] = useState<number>(0.00);
+
+  useEffect(() => setSubtotal(cart.reduce((acc, {price, quantity}) => acc + (price * quantity), 0)), [cart]);
 
   return <div className="Payment">
+    <h2>{cart.length ? `Subtotal: ${subtotal.toFixed(2)}` : 'Cart is empty'}</h2>
     <Elements stripe={stripePromise}> <CheckoutForm /> </Elements>
 
     <style>{`
+      .Payment {
+        max-height: 250px;
+        border-radius: 1rem;
+        box-shadow: 0px 5px 5px #ccc;
+        margin: 2rem 3rem 1.75rem 3rem;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      
       .Payment .FormGroup {
         margin: 0 15px 20px;
         padding: 0;
@@ -122,7 +139,6 @@ const Payment = () => {
       
       .Payment .StripeElement {
         width: 100%;
-        // padding: 11px 15px 11px 0;
         padding: .75rem .75rem;
         border: 1px solid ${colors.GRAYSCALE[4]};
         border-radius: 15px;

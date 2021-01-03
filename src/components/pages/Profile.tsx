@@ -2,9 +2,8 @@ import { useState, useEffect, useRef, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import Layout from '../layout';
 import { Store } from '../../types';
-import { editPassword } from '../../ajax';
+import { editPassword, getOrders } from '../../ajax';
 import { colors } from '../../styles';
-import { capitalize } from '../../util';
 import { useDispatch } from 'react-redux';
 import updateUser from '../../store/actions/updateUser';
 import { useHistory } from "react-router-dom";
@@ -30,6 +29,11 @@ const Profile = () => {
     const [error, setError] = useState<string>('');
     const [changingPassword, setChangingPassword] = useState<boolean>(false);
     const changePasswordBtn = useRef<HTMLButtonElement>(null);
+    const [orderCount, setOrderCount] = useState<number>(0);
+
+    useEffect(() => {
+        (async () => setOrderCount( (await getOrders(user?.id)).length) )()
+    }, [user]);
 
     useEffect(() => {
         if (changePasswordBtn?.current) {
@@ -68,9 +72,23 @@ const Profile = () => {
 
     return (
         <div className="Profile">
-            <h1 className="heading">{user && capitalize(user.username)}{user && (user.username.endsWith('s') ? "' " : "'s ")}Profile</h1>
+            <h1 className="heading">My Profile</h1>
             <div className="prompt">View and edit your account information here</div>
-            <div className="error">{error}</div>
+            {error && <div className="error">{error}</div>}
+            <section>
+                <div>
+                    <strong>ID: </strong>
+                    <span>#{user.id}</span>
+                </div>
+                <div>
+                    <strong>Username: </strong>
+                    <span>{user.username}</span>
+                </div>
+                <div>
+                    <strong>Orders: </strong>
+                    <span>{orderCount}</span>
+                </div>
+            </section>
             <section>
                 <button className="button" ref={changePasswordBtn} onClick={() => setChangingPassword(!changingPassword)}>Change Password</button>
                 {changingPassword &&
@@ -84,6 +102,10 @@ const Profile = () => {
             </section>
 
             <style>{`
+                .Profile section {
+                    margin-bottom: 1.5rem;
+                }
+
                 .Profile .button {
                     padding: .6rem .8rem;
                     font-size: .9rem;
