@@ -40,7 +40,7 @@ export function logout() {
 
 export async function editPassword(formData : models.PutableUser) : Promise<models.User|null> {
     try {
-        const { data } = await axios.put(api.EDIT_PASSWORD, formData);
+        const { data } = await axios.put(api.USER, formData);
         return data as models.User;
     } catch (e) {
         console.log(e);
@@ -141,7 +141,8 @@ export async function createOrder(formData : models.PostableOrder) : Promise<mod
 export async function getUsers() : Promise<models.User[]> {
     try {
         const { data } = await axios.get<models.User[]>(api.USER);
-        return (Array.isArray(data) ? data as models.User[] : []);
+        console.log(data);
+        return data;
     } catch (e) {
         console.log(e);
         return [];

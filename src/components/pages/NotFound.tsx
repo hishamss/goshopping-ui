@@ -8,7 +8,7 @@ const NotFound = () => {
     return <div className="NotFound">
         <h1 className="heading">Not Found</h1>
         <div className="prompt">We're sorry! This page doesn't exist.</div>
-        <Link to={routes.HOME}>Back to Home</Link>
+        <Link to={routes.STORE}>Back to Store</Link>
 
         <style>{`
             .NotFound .prompt {

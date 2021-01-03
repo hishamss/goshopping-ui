@@ -7,7 +7,7 @@ interface Props {
 }
 
 // Redirect to any route by passing it to the "to" property. Redirects to home by default.
-const Redirect = ({ to=routes.HOME } : Props) => {
+const Redirect = ({ to=routes.STORE } : Props) => {
     const history = useHistory();
     useEffect(() => history.push(to));
 

@@ -4,15 +4,16 @@ import Layout from '../layout';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/actions';
 import { PostableUser } from '../../types';
-import Redirect from './Redirect';
 import { login, signup } from '../../ajax';
+import { RouteComponentProps } from 'react-router-dom';
+import { routes } from '../../resources';
 
-interface Props {
+interface Props extends RouteComponentProps {
     // Tell the component which version to render with string types (exported from store/types)
     type : typeof SIGN_UP | typeof LOG_IN;
 }
 
-const Login = ({ type } : Props) => {
+const Login = ({ type, history } : Props) => {
     const isLogin = (type === LOG_IN);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState<PostableUser>({ username: '', password: '' });
@@ -28,7 +29,7 @@ const Login = ({ type } : Props) => {
         try {
             const user = await (isLogin ? login(formData) : signup(formData));
             dispatch( updateUser(user) );
-            return <Redirect />;
+            return history.push(routes.STORE);
         } catch (status) {
             switch (status) {
                 case 401:

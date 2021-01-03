@@ -7,13 +7,14 @@ import List from '../List';
 import SearchBar from '../SearchBar';
 import { getOrders, getStoreItems, getUsers, getTags } from '../../ajax';
 import { ListItemTypes, ItemSearchQueryParams, Tag } from '../../types';
-import Redirect from './Redirect';
+import { RouteComponentProps } from 'react-router-dom';
+import { routes } from '../../resources';
 
-interface Props {
+interface Props extends RouteComponentProps {
     type : typeof STORE | typeof ORDERS | typeof USERS;
 }
 
-const ListDisplay = ({ type } : Props) => {
+const ListDisplay = ({ type, history } : Props) => {
     const user = useSelector(({ user } : Store) => user);
     const [listItems, setListItems] = useState<ListItemTypes[]>([]);
     const [heading, setHeading] = useState<string>('Store');
@@ -31,22 +32,22 @@ const ListDisplay = ({ type } : Props) => {
                     setTags(await getTags());
                     break;
                 case ORDERS:
-                    if (!user) return <Redirect />;
+                    if (!user) return history.push(routes.STORE);
                     setHeading('My Orders');
                     setPrompt('View current and past orders for your account');
                     setListItems(await getOrders(user.id));
                     break;
                 case USERS:
-                    if (!user?.admin) return <Redirect />;
+                    if (!user?.admin) return history.push(routes.STORE);
                     setHeading('Users');
                     setPrompt('View and manage registered users');
                     setListItems(await getUsers());
                     break;
                 default:
-                    return <Redirect />
+                    return history.push(routes.STORE);
             }
         })();
-    }, [type, user]);
+    }, [type, user, history]);
 
     useEffect(() => {
         (type === STORE) && getStoreItems(search)
@@ -90,7 +91,7 @@ const ListDisplay = ({ type } : Props) => {
         <h1 className="heading">{heading}</h1>
         <div className="prompt">{prompt}</div>
         {type === STORE && <SearchBar handlers={handlers} tags={tags} top showPageButtons={showPageButtons} />}
-        <List type={type} list={listItems} />
+        <List type={type} list={listItems} setList={setListItems} />
         {type === STORE && <SearchBar handlers={handlers} tags={tags} top={false} showPageButtons={showPageButtons} />}
     </div>
 }

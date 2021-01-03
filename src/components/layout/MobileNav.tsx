@@ -25,7 +25,6 @@ const MobileNav = () => {
             <div className="hamburger" ref={hamburger} />
             <span className="hamburger-click-region" onClick={() => setOpen(!open)} />
             <ul ref={dropdown}>
-                <li> <NavLink to={routes.HOME} exact activeClassName="selected">Home</NavLink> </li>
                 <li> <NavLink to={routes.STORE} exact activeClassName="selected">Store</NavLink> </li>
 
                 {user &&

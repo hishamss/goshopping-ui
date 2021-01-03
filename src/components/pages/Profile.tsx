@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import Layout from '../layout';
 import { Store } from '../../types';
-import Redirect from './Redirect';
 import { editPassword } from '../../ajax';
 import { colors } from '../../styles';
 import { capitalize } from '../../util';
@@ -10,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import updateUser from '../../store/actions/updateUser';
 import { useHistory } from "react-router-dom";
 import { routes } from '../../resources';
+
 interface ProfileState {
     changingPassword : boolean;
     currentPassword : string;
@@ -37,7 +37,10 @@ const Profile = () => {
         }
     }, [changingPassword]);
     
-    if (!user) return <Redirect />;
+    if (!user) {
+        history.push(routes.STORE);
+        return <></>;
+    }
 
     const onChange = (e : FormEvent<HTMLInputElement>) => {
         setState({ ...state, [e.currentTarget.name]: e.currentTarget.value });
@@ -50,12 +53,13 @@ const Profile = () => {
             const user = await editPassword({ oldPass: state.currentPassword, newPass: state.newPassword });
             setError('Password Changed');
             dispatch(updateUser(user));
-            //await setTimeout(()=>{console.log('Redirection')}, 2000)
-            history.push(routes.HOME);
+            return history.push(routes.STORE);
         } catch (e) { 
             switch (e) {
                 case 400:
                     return setError('Ivalid password');
+                case 401:
+                    return setError('Invalid password');
                 default:
                     setError('Something went wrong');
             }    

@@ -6,7 +6,6 @@ import { updateUser } from './store/actions';
 import { Store, User, OrderItem } from './types';
 import { SIGN_UP, LOG_IN, STORE, ORDERS, USERS } from './store/types';
 
-import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Contact from './components/pages/Contact';
 import Profile from './components/pages/Profile';
@@ -49,7 +48,6 @@ function App() {
     <BrowserRouter>
       <Switch>
         {/* Perpetual routes */}
-        <Route path={routes.HOME} exact component={Home} />
         <Route key={routes.STORE} path={routes.STORE} exact render={() => <ListDisplay type={STORE} />} />
         <Route key={routes.ABOUT} path={routes.ABOUT} exact component={About} />
         <Route key={routes.CONTACT} path={routes.CONTACT} exact component={Contact} />
@@ -74,7 +72,7 @@ function App() {
 
         {/* Redirect any valid route inputs to Home, invalid to 404 */}
         {Object.values(routes).map(route => <Route key={route} path={route} exact component={Redirect} />)}
-        <Route path={routes.HOME} component={NotFound} />
+        <Route path={routes.STORE} component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

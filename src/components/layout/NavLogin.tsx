@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { routes } from "../../resources";
 import { Store } from "../../types";
 import { updateUser } from "../../store/actions";
 import { colors } from "../../styles";
-import Redirect from "../pages/Redirect";
 import { logout } from "../../ajax";
 
 const NavLogin = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { user, cart } = useSelector((store : Store) => store);
 
@@ -15,7 +15,7 @@ const NavLogin = () => {
     // Reset local storage
     logout();
     dispatch(updateUser(null));
-    return <Redirect />;
+    return history.push(routes.STORE);
   };
 
   return (

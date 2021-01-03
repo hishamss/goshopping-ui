@@ -1,19 +1,21 @@
-import { ListItemTypes, Item, OrderItem, Tag, Store } from "../types";
-import { ListTypes, STORE, CHECKOUT, ORDERS } from "../store/types";
+import { ListItemTypes, Item, OrderItem, Tag, Store, User } from "../types";
+import { ListTypes, STORE, CHECKOUT, ORDERS, USERS } from "../store/types";
 import ListItem from "./ListItem";
 import { updateCart } from "../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCartStorage } from '../util';
-import {useState ,FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
+import { deleteUser } from '../ajax';
 
 interface Props {
   list: ListItemTypes[];
+  setList?: React.Dispatch<React.SetStateAction<ListItemTypes[]>>;
   type: ListTypes;
 }
 
-const List = ({ list, type }: Props) => {
+const List = ({ list, setList, type }: Props) => {
   const dispatch = useDispatch();
-  const { user, cart } = useSelector((store : Store) => store);
+  const {user, cart} = useSelector((store : Store) => store);
   const [showCaseItem, setShowCaseItem] = useState<ListItemTypes>(list[0]);
   const [message, setMessage] = useState("");
   
@@ -52,9 +54,20 @@ const List = ({ list, type }: Props) => {
     updateCartStorage(user, cart);
   }
 
+  const onDeleteUser = (user_ : User) : void => {
+    if (user?.admin && !user_.admin && window.confirm("This action cannot be reversed")) {
+      deleteUser(user_.id)
+        .then(() => {
+          setMessage(`Deleted user "${user_.username}"`);
+          setList && setList(list.filter(listItem => listItem !== user_));
+        })
+        .catch(() => setMessage(`Failed to delete user "${user_.username}"`))
+    }
+  }
+
   return (
     <div className="List">
-        {message && <div className = "failure"> {message}</div>}
+        {message && <div className="error">{message}</div>}
         {!list.length
             ? <div>No items found</div>
             : <ul>
@@ -64,7 +77,7 @@ const List = ({ list, type }: Props) => {
 
                         <ListItem key={item.id} type={type} setMessage={setMessage} setShowCaseItem={setShowCaseItem} item={  Object.entries(item)
                             .reduce((acc, [key, val]) =>
-                                ['id', 'img'].includes(key)
+                                [(type !== USERS && 'id'), 'img', 'password'].includes(key)
                                     ? acc
                                     : ({ ...acc, [key]: (key === 'tags')
                                         ? val.map(({ name } : Tag) => name)
@@ -96,6 +109,10 @@ const List = ({ list, type }: Props) => {
                                 <button style={{ backgroundColor: 'red' }} onClick={() => adjustCartQuantity(item.id, true)}>-</button>
                                 <button onClick={() => adjustCartQuantity(item.id, true, true)}>Drop All</button>
                             </div>
+                        }
+
+                        {(type === USERS && !(item as User).admin) &&
+                            <button className="btn-delete-user" onClick={() => onDeleteUser(item as User)}>Delete</button>
                         }
                     </li>
                 )}
@@ -139,6 +156,23 @@ const List = ({ list, type }: Props) => {
 
             .List .adjust-cart-checkout button:active {
                 transform: translateY(-.05rem);
+            }
+
+            .List .btn-delete-user {
+                background-color: red;
+                color: white;
+                width: 4rem;
+                text-align: center;
+            }
+
+            .List .btn-delete-user:hover {
+                box-shadow: inset 2px 1px maroon;
+            }
+
+            .List .error {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+                text-align: center;
             }
         `}</style>
     </div>
