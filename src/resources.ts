@@ -2,7 +2,8 @@ let url = `http://54.151.78.250:8080/goshopping-api`;
 
 if (window.location.host.includes('localhost')) {
     const local = localStorage.getItem('API_URL');
-    url = localStorage.getItem('API_URL') || `http://localhost:8080/api`;
+    //url = localStorage.getItem('API_URL') || `http://localhost:8080/api`;
+    url = localStorage.getItem('API_URL') || `http://localhost:8080/goshopping/`;
 
     if (!local) {
         console.warn("localStorage.getItem('API_URL') not set. " +

@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/goshopping-ui/static/css/main.841a56e6.chunk.css",
-    "main.js": "/goshopping-ui/static/js/main.d072a551.chunk.js",
-    "main.js.map": "/goshopping-ui/static/js/main.d072a551.chunk.js.map",
+    "main.css": "/goshopping-ui/static/css/main.88c95399.chunk.css",
+    "main.js": "/goshopping-ui/static/js/main.68e1b3ad.chunk.js",
+    "main.js.map": "/goshopping-ui/static/js/main.68e1b3ad.chunk.js.map",
     "runtime-main.js": "/goshopping-ui/static/js/runtime-main.bf18ce59.js",
     "runtime-main.js.map": "/goshopping-ui/static/js/runtime-main.bf18ce59.js.map",
     "static/js/2.08b05f1c.chunk.js": "/goshopping-ui/static/js/2.08b05f1c.chunk.js",
@@ -10,14 +10,14 @@
     "static/js/3.2c9cf8ee.chunk.js": "/goshopping-ui/static/js/3.2c9cf8ee.chunk.js",
     "static/js/3.2c9cf8ee.chunk.js.map": "/goshopping-ui/static/js/3.2c9cf8ee.chunk.js.map",
     "index.html": "/goshopping-ui/index.html",
-    "static/css/main.841a56e6.chunk.css.map": "/goshopping-ui/static/css/main.841a56e6.chunk.css.map",
+    "static/css/main.88c95399.chunk.css.map": "/goshopping-ui/static/css/main.88c95399.chunk.css.map",
     "static/js/2.08b05f1c.chunk.js.LICENSE.txt": "/goshopping-ui/static/js/2.08b05f1c.chunk.js.LICENSE.txt",
     "static/media/loading.cb238f1e.gif": "/goshopping-ui/static/media/loading.cb238f1e.gif"
   },
   "entrypoints": [
     "static/js/runtime-main.bf18ce59.js",
     "static/js/2.08b05f1c.chunk.js",
-    "static/css/main.841a56e6.chunk.css",
-    "static/js/main.d072a551.chunk.js"
+    "static/css/main.88c95399.chunk.css",
+    "static/js/main.68e1b3ad.chunk.js"
   ]
 }
